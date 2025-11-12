@@ -1,0 +1,53 @@
+@import "../_variables";
+.reasons-section {
+  h2 {
+    text-align: left;
+    font-size: 2.5rem;
+    width: 50%;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: $color-yellow;
+  }
+
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .reason-card {
+    height: 200px;
+    background-color: $color-black;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: left;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: $color-yellow;
+    }
+
+    p {
+      font-size: 1rem;
+      color: $color-text-light;
+      line-height: 1.6;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .reasons-section {
+    h2 {
+      text-align: center;
+      font-size: 2rem;
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,79 @@
+.review-summary {
+  background: #ffffff;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+
+  .platform-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .card-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+  }
+
+  .card-subtitle {
+    font-size: 14px;
+    color: #666;
+  }
+
+  .rating-summary {
+    .rating-value {
+      font-size: 2.5rem;
+      color: #000;
+    }
+
+    .stars {
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .stars span {
+      font-size: 1.2rem;
+    }
+  }
+
+  .reviews-count {
+    font-size: 14px;
+    color: #888;
+  }
+
+  .buttons {
+    button {
+      font-size: 14px;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        opacity: 0.9;
+      }
+
+      &.btn-primary {
+        background-color: #007bff;
+        color: #fff;
+
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+
+      &.btn-light {
+        background-color: #f8f9fa;
+        color: #000;
+
+        &:hover {
+          background-color: #eaeaea;
+        }
+      }
+    }
+  }
+}

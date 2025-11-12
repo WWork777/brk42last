@@ -1,0 +1,323 @@
+@import "../_variables";
+
+.swiper-pagination {
+  bottom: 10px;
+  text-align: center;
+  position: absolute;
+  .swiper-pagination-bullet {
+    background: $color-text-light;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+  }
+
+  .swiper-pagination-bullet-active {
+    background: $color-yellow;
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+.custom-carousel {
+  width: 100%;
+  position: relative;
+  margin-top: 100px;
+  padding: 40px 0;
+  margin-left: auto;
+  margin-right: auto;
+
+  // Левая тень
+  &::before {
+    left: 0;
+    background: linear-gradient(to right, #191a1c, #191a1c, #191a1c00);
+  }
+
+  // Правая тень
+  &::after {
+    right: 0;
+    background: linear-gradient(to left, #191a1c, #191a1c, #191a1c00);
+  }
+
+  .carousel-wrapper {
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .carousel-slide {
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    will-change: transform;
+    transition: transform 1s ease;
+    .carousel-content {
+      overflow: visible;
+      height: 50vh !important;
+      border-radius: 20px !important;
+      background: $color-black !important; // Чёрный фон
+      margin-inline: 10px;
+      color: $color-text-light; // Светлый текст
+      text-align: left;
+
+      .carousel-media {
+        padding: 0 !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 10px;
+
+        .button-play-section {
+          position: relative;
+          width: 100%;
+          height: 100%;
+
+          button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: $color-yellow;
+            border: none;
+            border-radius: 10px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+
+            &:hover {
+              opacity: 0.8;
+            }
+          }
+        }
+
+        img,
+        iframe {
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .carousel-text {
+        color: $color-text-light; // Цвет текста
+        padding: 20px;
+        display: flex;
+        align-items: self-start;
+        justify-content: center;
+        flex-direction: column;
+
+        h1 {
+          font-size: 3rem;
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+
+        p {
+          font-size: 1.5rem;
+          margin-bottom: 20px;
+        }
+
+        .btn {
+          border: none;
+          background: $color-yellow;
+          color: $color-black;
+          padding: 10px 20px;
+          border-radius: 5px;
+          font-weight: bold;
+          transition: background 0.3s ease;
+
+          &:hover {
+            background: lighten($color-yellow, 10%);
+          }
+        }
+      }
+    }
+  }
+
+  // Навигационные кнопки
+  .carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: $color-yellow;
+    color: $color-black;
+    border-radius: 50%;
+    padding: 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 10;
+    transition: background 0.3s ease;
+    &:hover {
+      background: lighten($color-yellow, 10%);
+    }
+
+    &.prev {
+      left: 5%;
+    }
+
+    &.next {
+      right: 5%;
+    }
+  }
+
+  // Пагинация
+}
+
+.slick-dots {
+  li {
+    button {
+      &::before {
+        font-family: "slick";
+        font-size: 7px;
+        line-height: 20px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        content: "•"; // Символ точки
+        text-align: center;
+        color: $color-text-light; // Белый цвет для неактивных точек
+        transition: all 0.3s ease; // Плавный переход
+
+        @media (max-width: 992px) {
+          margin-top: 50px;
+        }
+      }
+    }
+
+    &.slick-active {
+      button {
+        &::before {
+          color: $color-yellow; // Жёлтый цвет для активной точки
+          transform: scale(1.3); // Увеличиваем активную точку
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1300px) {
+  .carousel-nav {
+    display: none !important;
+  }
+  .carousel-slide {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1424px) {
+  .custom-carousel {
+    margin-top: 60px;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+
+    .carousel-slide {
+      .carousel-content {
+        height: 60vh !important;
+        .carousel-text {
+          margin-bottom: 2rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-carousel {
+    margin-top: 60px;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+
+    .carousel-slide {
+      .carousel-content {
+        height: 100vh !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .carousel-text {
+          margin-bottom: 2rem;
+          height: 30vh !important;
+          h2 {
+            font-size: 2.5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .custom-carousel {
+    margin-top: 60px;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+
+    .carousel-slide {
+      .carousel-content {
+        height: 100vh !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .carousel-text {
+          margin-bottom: 1.2rem;
+          height: 40vh !important;
+          h1 {
+            font-size: 1.5rem !important;
+          }
+          p {
+            font-size: 1rem !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-carousel {
+    margin-top: 60px;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+
+    .carousel-slide {
+      h1 {
+        font-size: 2rem !important;
+      }
+      .carousel-content {
+        height: 80vh !important;
+        justify-content: center !important;
+        .carousel-text {
+          margin-bottom: 1rem;
+          height: 40vh;
+        }
+      }
+    }
+  }
+  .videoimg,
+  iframe {
+    padding: 20px;
+  }
+}

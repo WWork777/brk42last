@@ -1,0 +1,87 @@
+@import "../_variables";
+
+.hero-section {
+  margin-top: 100px;
+  background: $color-black; // Синий фон
+  // background-image: url(images/brklogo.svg);
+  // background-repeat: no-repeat;
+  // background-position: -30%;
+  color: #fff;
+  padding: 100px 0;
+  text-align: center;
+  border-radius: 20px;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .hero-content {
+    max-width: 800px;
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      font-size: 16px;
+      font-weight: bold;
+      background: $color-yellow; // Желтая кнопка
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .hero-images {
+    display: flex;
+    gap: 20px;
+
+    .hero-image {
+      width: 150px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+    .hero-content {
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+}

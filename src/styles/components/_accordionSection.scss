@@ -1,0 +1,137 @@
+@import "../_variables";
+
+.accordion-section {
+  background-color: $color-black; // Светло-серый фон
+  padding: 50px 0;
+
+  h2 {
+    font-size: 2.5rem;
+    color: $color-yellow;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .accordion {
+    margin: 0 auto;
+
+    .accordion-item {
+      text-decoration: none !important;
+      border: 2px solid $color-yellow;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      overflow: hidden;
+
+      transition: transform 0.3s ease;
+
+      &:hover {
+        background-color: black;
+        transform: translateY(-5px);
+      }
+
+      &.active {
+        .accordion-title {
+          background-color: $color-yellow;
+          color: $color-black;
+        }
+      }
+
+      .accordion-title {
+        border: none !important;
+        width: 100%;
+        text-align: left;
+        padding: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        background-color: black;
+        text-decoration: none;
+        color: $color-yellow;
+        border: 0;
+        opacity: 1 !important;
+        cursor: pointer;
+      }
+
+      .accordion-content {
+        background-color: black;
+        max-height: 0;
+        overflow: hidden;
+        padding: 0 15px;
+
+        p {
+          font-size: 1.2rem;
+          color: $color-text-light;
+          line-height: 1.6;
+          margin: 15px 0;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .accordion-section {
+    background-color: $color-black; // Светло-серый фон
+    padding: 50px 0;
+
+    h2 {
+      font-size: 2.5rem;
+      color: $color-yellow;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .accordion {
+      margin: 0 auto;
+
+      .accordion-item {
+        text-decoration: none !important;
+        border: 2px solid $color-yellow;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        overflow: hidden;
+
+        transition: transform 0.3s ease;
+
+        &:hover {
+          background-color: black;
+          transform: translateY(-5px);
+        }
+
+        &.active {
+          .accordion-title {
+            background-color: $color-yellow;
+            color: $color-black;
+          }
+        }
+
+        .accordion-title {
+          border: none !important;
+          width: 100%;
+          text-align: left;
+          padding: 15px;
+          font-size: 18px;
+          font-weight: bold;
+          background-color: black;
+          text-decoration: none;
+          color: $color-yellow;
+          border: 0;
+          opacity: 1 !important;
+          cursor: pointer;
+        }
+
+        .accordion-content {
+          background-color: black;
+          max-height: 0;
+          overflow: hidden;
+          padding: 0 15px;
+
+          p {
+            font-size: 1.2rem;
+            color: $color-text-light;
+            line-height: 1.6;
+            margin: 15px 0;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,75 @@
+@import "../_variables";
+
+.advantages-section {
+  background: $color-dark;
+  padding: 80px 20px;
+  border-radius: 15px;
+
+  .advantages-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: $color-text-light;
+    margin-bottom: 20px;
+  }
+
+  .advantage-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px; // Расстояние между иконкой и текстом
+    .icon {
+      flex-shrink: 0;
+      img {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    h3 {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: $color-text-light;
+      margin: 0;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: $color-text-light;
+      margin: 15px 0 0 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .advantages-title {
+    font-size: 2rem; // Уменьшаем размер заголовка на телефонах
+
+    margin-bottom: 60px !important;
+  }
+
+  .advantage-item {
+    .icon img {
+      width: 60px !important; // Увеличиваем размер иконки
+      height: 60px !important   ;
+    }
+
+    h3 {
+      font-size: 1.4rem; // Уменьшаем заголовок
+      margin-top: 10px !important;
+    }
+
+    p {
+      font-size: 1.2rem !important; // Увеличиваем текст описания
+      margin-top: 10px;
+    }
+  }
+}
+
+/* Адаптивность для маленьких экранов ноутбуков */
+@media (min-width: 768px) and (max-width: 1324px) {
+  .advantages-title {
+    font-size: 2rem !important;
+    font-weight: bold;
+    color: $color-text-light;
+    margin-bottom: 20px;
+  }
+}

@@ -1,0 +1,68 @@
+@import "./variables"; // Если у вас есть переменные SCSS
+
+@font-face {
+  font-family: "Exo 2";
+  src: url("/fonts/exo2/Exo2-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Exo 2";
+  src: url("/fonts/exo2/Exo2-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Exo 2";
+  src: url("/fonts/exo2/Exo2-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* Установка базовых стилей */
+@import "./variables";
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: $color-dark !important;
+  font-family: "Exo 2", sans-serif !important;
+  color: $color-text-light;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: bold;
+  color: $color-text-light;
+}
+
+a {
+  text-decoration: none;
+  color: $color-yellow;
+
+  &:hover {
+    color: darken($color-yellow, 10%);
+  }
+}
+
+button {
+  font-family: inherit;
+  font-weight: bold;
+  background-color: $color-yellow;
+  color: $color-black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken($color-yellow, 10%);
+  }
+}

@@ -1,0 +1,540 @@
+@import "../variables";
+
+.calculator {
+  background-color: $color-dark;
+  color: $color-text-light;
+  font-family: $font-family;
+  padding: 2rem 0;
+
+  .pipe-card,
+  .setup-card {
+    padding: 20px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+
+    &.selected {
+      opacity: 1;
+    }
+
+    img {
+      max-width: 100%;
+      height: 150px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: $color-text-light;
+  }
+
+  .calculator-description {
+    font-size: 1.3rem;
+    color: $color-text-light;
+    margin-bottom: 2rem;
+  }
+
+  .step-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $color-yellow;
+    margin-bottom: 1rem;
+  }
+
+  .pipe-card,
+  .setup-card {
+    min-height: 26vh;
+    margin-inline: 10px;
+    background-color: $color-black;
+    border: 2px solid $color-black;
+    border-radius: 20px;
+    padding: 1rem;
+    text-align: left;
+    transition: 0.3s ease;
+    cursor: pointer;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &.selected {
+      opacity: 1;
+    }
+
+    img {
+      height: auto;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+      min-height: 170px;
+      max-height: 200px;
+    }
+
+    h4 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: $color-yellow;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 0.975rem;
+      color: $color-text-light;
+    }
+
+    .price {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: $color-text-light;
+      margin-top: 0.5rem;
+    }
+
+    .btn-select {
+      margin-top: 1rem;
+      background-color: $color-yellow;
+      color: $color-black;
+      border: none;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken($color-yellow, 10%);
+      }
+    }
+  }
+
+  .depth-selector {
+    position: relative;
+    margin: 2rem 0;
+
+    .form-range {
+      width: 100%;
+      accent-color: $color-yellow;
+    }
+
+    .depth-values {
+      font-size: 1.2rem;
+      color: $color-text-light;
+      margin-top: 0.5rem;
+
+      span {
+        font-weight: 600;
+      }
+    }
+  }
+
+  .total-cost {
+    color: $color-text-light;
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    span {
+      font-size: 1.4rem;
+      margin-left: 1rem;
+      color: $color-yellow;
+    }
+  }
+
+  .contact-form {
+    margin-top: 3rem;
+
+    h4 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: $color-text-light;
+      margin-bottom: 1rem;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+
+      .form-control {
+        background-color: $color-dark;
+        color: $color-text-light !important;
+        border: 2px solid $color-yellow;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        padding: 0.5rem;
+
+        &::placeholder {
+          color: $color-text-light;
+        }
+
+        &:focus {
+          box-shadow: 0 0 5px $color-yellow;
+        }
+      }
+
+      .btn {
+        background-color: $color-yellow;
+        color: $color-black;
+        font-weight: 600;
+        font-size: 20px;
+        border: none;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border-radius: 5px;
+        margin-top: 1rem;
+
+        &:hover {
+          background-color: darken($color-yellow, 10%);
+        }
+      }
+    }
+  }
+}
+
+.custom-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  transform: translateY(-50%);
+  background: $color-yellow;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: $color-yellow;
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  &.custom-next {
+    right: 20px;
+  }
+
+  &.custom-prev {
+    left: 20px;
+  }
+
+  i {
+    font-size: 18px;
+  }
+}
+
+.depth-selector {
+  text-align: center;
+
+  .depth-range {
+    width: 100%;
+    height: 8px;
+    border-radius: 5px;
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: $color-yellow;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    &::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #ffc107;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: #e0a800;
+      }
+    }
+  }
+
+  .depth-values {
+    font-size: 16px;
+    color: $color-text-light !important;
+    font-weight: 600;
+
+    .depth-label {
+      color: $color-text-light !important;
+    }
+
+    .depth-value {
+      color: $color-yellow !important;
+      font-weight: bold;
+    }
+  }
+}
+
+.equipment-container {
+  border-radius: 20px; // Скругление углов
+
+  margin-bottom: 2rem; // Отступ снизу
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $color-yellow; // Тёмный текст для заголовка
+    margin-bottom: 1rem;
+  }
+
+  .form-check {
+    display: flex;
+    align-items: center;
+    gap: 0.1rem; // Расстояние между чекбоксом и текстом
+
+    .form-check-input {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .form-check-label {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: $color-text-light;
+    }
+  }
+
+  ul {
+    list-style: none; // Убираем маркеры списка
+    padding: 0;
+    li {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid $color-dark; // Разделитель
+      font-size: 1rem;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  h4 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: $color-yellow;
+  }
+}
+
+.form-check {
+  display: flex; // Располагаем чекбокс и текст в одну линию
+  align-items: center;
+  gap: 0.5rem; // Расстояние между чекбоксом и текстом
+
+  .form-check-input {
+    margin-right: 0.5rem;
+    width: 24px; // Размер чекбокса
+    height: 24px;
+    border: 2px solid $color-yellow; // Рамка жёлтого цвета
+    border-radius: 4px; // Лёгкое скругление углов
+    background-color: $color-black; // Светлый фон
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:checked {
+      background-color: $color-black; // Цвет заполнения при выборе
+      border-color: $color-yellow; // Цвет рамки при выборе
+    }
+  }
+
+  .form-check-label {
+    font-size: 1.2rem; // Увеличенный размер текста
+    font-weight: bold; // Жирный текст
+    color: $color-dark; // Тёмный текст
+    cursor: pointer; // Указывает, что можно кликнуть на текст
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $color-yellow; // Жёлтый текст при наведении
+    }
+  }
+}
+
+.table {
+  background-color: #333;
+  margin-top: 1rem;
+  border-collapse: collapse;
+  width: 100%;
+
+  th,
+  td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid $color-dark; // Линия между строками
+  }
+
+  th {
+    font-weight: bold;
+    color: $color-yellow; // Цвет текста заголовков
+    background-color: $color-black; // Фон для заголовков
+  }
+
+  td {
+    font-size: 1rem;
+    color: $color-text-light; // Текст таблицы
+    background-color: $color-dark !important;
+  }
+
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: $color-black; // Лёгкая подсветка нечётных строк
+  }
+}
+
+@media (max-width: 400px) {
+  .calculator {
+    .pipe-card,
+    .setup-card {
+      h4 {
+        font-size: 1rem;
+        font-weight: bold;
+        color: $color-yellow;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.8rem;
+      }
+
+      .btn-select {
+        margin: 0;
+        padding: 0.5rem 1rem;
+      }
+
+      .setup-image,
+      .pipe-image {
+        height: 200px;
+        width: 150px;
+      }
+    }
+  }
+  .contact-form {
+    h4 {
+      font-size: 1.5rem !important;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+
+      .form-control {
+        background-color: $color-dark;
+        color: $color-text-light !important;
+        border: 2px solid $color-yellow;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        padding: 0.5rem;
+
+        &::placeholder {
+          color: $color-text-light;
+        }
+
+        &:focus {
+          box-shadow: 0 0 5px $color-yellow;
+        }
+      }
+
+      .btn {
+        background-color: $color-yellow;
+        color: $color-black;
+        font-weight: 600;
+        border: none;
+        width: 100%;
+        padding: 0.75rem 2rem;
+        border-radius: 5px;
+        margin-top: 1rem;
+
+        &:hover {
+          background-color: darken($color-yellow, 10%);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .calculator {
+    .pipe-card,
+    .setup-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40vh !important;
+      padding: 0px;
+
+      h4 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: $color-yellow;
+      }
+
+      .setup-image,
+      .pipe-image {
+        height: 200px;
+        width: 150px;
+      }
+    }
+  }
+  .contact-form {
+    h4 {
+      font-size: 1.5rem !important;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+
+      .form-control {
+        background-color: $color-dark;
+        color: $color-text-light !important;
+        border: 2px solid $color-yellow;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        padding: 0.5rem;
+
+        &::placeholder {
+          color: $color-text-light;
+        }
+
+        &:focus {
+          box-shadow: 0 0 5px $color-yellow;
+        }
+      }
+
+      .btn {
+        background-color: $color-yellow;
+        color: $color-black;
+        font-weight: 600;
+        border: none;
+        width: 100%;
+        padding: 0.75rem 2rem;
+        border-radius: 5px;
+        margin-top: 1rem;
+
+        &:hover {
+          background-color: darken($color-yellow, 10%);
+        }
+      }
+    }
+  }
+}

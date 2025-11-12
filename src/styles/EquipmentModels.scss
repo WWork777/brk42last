@@ -1,0 +1,102 @@
+@import "./variables";
+
+.models-container {
+  margin-top: 150px;
+  .canvas-wrapper {
+    position: relative;
+    height: 60dvh;
+    min-height: 320px;
+    background-color: $color-black;
+    border-radius: 20px;
+    overflow: hidden;
+    canvas {
+      cursor: grab;
+      &:active {
+        cursor: grabbing;
+      }
+    }
+    .loader {
+      position: absolute;
+      z-index: 100;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 8px solid #000000b0;
+      border-top: 8px solid $color-yellow;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 2s linear infinite;
+    }
+
+    .embed-3d {
+      position: absolute;
+      inset: 0; /* растянем на всю .canvas-wrapper */
+      width: 100%;
+      height: 100%;
+
+      iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+      }
+    }
+
+    canvas {
+      position: absolute !important;
+      inset: 0;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+  }
+
+  .list-group-item {
+    font-weight: bold;
+    transition: all 0.3s ease;
+    background-color: $color-black;
+    border: none;
+    color: $color-text-light;
+    &:hover {
+      background-color: $color-yellow;
+      color: $color-black;
+    }
+  }
+
+  .list-group-item.active {
+    background-color: $color-yellow;
+    color: $color-black;
+  }
+
+  h2 {
+    color: $color-yellow;
+    font-weight: 700;
+  }
+
+  p {
+    color: $color-text-light;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .models-container {
+    margin-top: 100px;
+
+    .canvas-wrapper {
+      height: 65dvh; /* чуть выше на телефоне */
+      min-height: 360px;
+    }
+  }
+}

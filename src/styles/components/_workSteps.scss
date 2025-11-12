@@ -1,0 +1,149 @@
+@import "../variables";
+
+.work-steps-section {
+  padding: 60px 0;
+  color: #ffffff;
+
+  .section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+
+  .section-description {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    margin-inline: 10rem;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .work-step-card {
+    background-color: #000000;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: left;
+    margin-bottom: 20px;
+    height: 30vh;
+
+    .step-number {
+      background-color: $color-yellow;
+      color: #000000;
+      font-size: 2rem;
+      font-weight: bold;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+
+    .step-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .step-description {
+      font-size: 1rem;
+      color: #d1d1d1;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .work-steps-section {
+    .work-step-card {
+      min-height: 30vh;
+
+      .step-container {
+        width: 70%;
+        margin-left: 1rem;
+        .step-title {
+          font-size: 1.2rem;
+        }
+
+        .step-description {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .work-steps-section {
+    .section-description {
+      margin-inline: 0rem;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .work-step-card {
+      background-color: #000000;
+      border-radius: 20px;
+      padding: 30px;
+      text-align: left;
+      display: flex;
+
+      align-items: center;
+      flex-wrap: wrap;
+      max-height: 25vh;
+
+      .step-container {
+        width: 70%;
+        margin-left: 1rem;
+        .step-title {
+          font-size: 1.2rem;
+        }
+
+        .step-description {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1424px) {
+  .work-steps-section {
+    .section-description {
+      margin-inline: 0rem;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .work-step-card {
+      background-color: #000000;
+      border-radius: 20px;
+      padding: 30px;
+      text-align: left;
+
+      min-height: 30vh;
+
+      .step-title {
+        font-size: 1.2rem;
+      }
+
+      .step-description {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}

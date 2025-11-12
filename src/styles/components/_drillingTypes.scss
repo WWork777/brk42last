@@ -1,0 +1,322 @@
+@import "../variables";
+
+.drilling-types-section {
+  padding: 50px 0;
+  border-radius: 20px;
+
+  .section-title {
+    font-size: 2.5rem;
+    color: $color-text-light;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+
+  .drilling-slide {
+    .canvas-container {
+      position: relative;
+      height: 400px;
+      padding-inline: 2rem;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .loader {
+        position: absolute;
+        z-index: 100;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 8px solid #000000b0;
+        border-top: 8px solid $color-yellow;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 2s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        100% {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+
+      Canvas {
+        background-color: $color-black;
+        cursor: grab;
+        border-radius: 20px;
+
+        &:active {
+          cursor: grabbing;
+        }
+      }
+
+      .image-container {
+        position: relative;
+        img {
+          background-color: $color-black;
+
+          border-radius: 10px;
+          background-position: center;
+          background-image: linear-gradient(
+              to right,
+              #333333 1px,
+              transparent 1px
+            ),
+            /* Вертикальные линии */
+              linear-gradient(to bottom, #333333 1px, transparent 1px); /* Горизонтальные линии */
+          background-size: 40px 40px; /* Размер ячейки сетки */
+        }
+        .btn-3d-view {
+          position: absolute;
+          color: black !important;
+          border-radius: 15px;
+          top: 10px;
+          left: 10px;
+          color: $color-yellow;
+          text-decoration: none;
+        }
+      }
+    }
+
+    .text-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin-inline: 0.5rem;
+      color: $color-text-light;
+      min-height: 500px;
+      padding: 1rem;
+      border-radius: 20px;
+      background-color: black;
+
+      .slide-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .slide-description {
+        font-size: 1rem;
+        margin-bottom: 20px;
+        color: $color-text-light;
+        @media (max-width: 768px) {
+          font-size: 1rem;
+        }
+      }
+
+      .slide-specs {
+        margin-bottom: 15px;
+
+        .spec-item {
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px;
+          @media (max-width: 768px) {
+            span {
+              font-size: 0.8rem;
+            }
+          }
+
+          .icon {
+            margin-right: 8px;
+            font-size: 18px;
+            color: $color-yellow;
+          }
+
+          .spec-label {
+            font-weight: bold;
+            margin-right: 5px;
+          }
+
+          .spec-value {
+            color: $color-yellow;
+            font-weight: bold;
+          }
+        }
+
+        .row {
+          margin-bottom: 10px;
+        }
+      }
+
+      .filter-details {
+        h5 {
+          font-size: 16px;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+
+        p {
+          margin-bottom: 0 !important;
+          font-size: 1rem;
+          color: $color-yellow;
+          border: 2px solid $color-yellow;
+          padding: 1rem;
+          border-radius: 10px;
+          @media (max-width: 768px) {
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+.accordion {
+  width: 100%;
+
+  button {
+    background: none;
+    border: none;
+    color: $color-yellow !important;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &:hover {
+      text-decoration: underline;
+      opacity: 0.8;
+    }
+
+    i {
+      transition: transform 0.3s ease-in-out;
+    }
+
+    &.expanded i {
+      transform: rotate(180deg);
+    }
+  }
+
+  .accordion-content {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba($color-black, 0.5);
+
+    p {
+      margin-bottom: 10px;
+      color: $color-text-light;
+      font-size: 1rem;
+      border: none;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .slide-specs {
+      margin: 15px 0;
+
+      .spec-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+
+        .bi {
+          color: $color-yellow;
+          margin-right: 8px;
+        }
+
+        .spec-label {
+          font-weight: bold;
+          margin-right: 5px;
+        }
+
+        .spec-value {
+          color: $color-yellow;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .filter-details {
+      p {
+        margin-bottom: 0;
+        border: none;
+        padding: 0;
+        color: $color-yellow;
+        font-size: 0.95rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .drilling-types-section {
+    overflow: hidden;
+    .col-md-8 {
+      overflow: hidden;
+    }
+    .slick-list {
+      overflow: visible !important;
+    }
+    .section-title {
+      text-align: center;
+    }
+
+    .drilling-slide {
+      .canvas-container {
+        padding: 1rem !important;
+      }
+      .text-container {
+        padding: 1rem;
+        margin-inline: 0.1rem;
+        min-height: 80px;
+        .slide-title {
+          font-size: 1.5rem;
+        }
+      }
+
+      .canvas-container {
+      }
+    }
+  }
+
+  .accordion {
+    margin-top: 15px;
+
+    button {
+      background: none;
+      border: none;
+      color: $color-yellow !important; // Используем вашу палитру
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        text-decoration: underline;
+        opacity: 0.7;
+      }
+
+      i {
+        margin-left: 8px;
+        transition: transform 0.3s ease-in-out;
+      }
+
+      &.expanded i {
+        transform: rotate(180deg); // Анимация для стрелки
+      }
+    }
+
+    p {
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: $color-text-light; // Цвет текста
+
+      padding: 10px;
+      border-radius: 5px;
+      border: 2px solid $color-yellow;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+}

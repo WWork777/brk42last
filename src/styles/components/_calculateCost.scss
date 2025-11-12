@@ -1,0 +1,50 @@
+@import "../_variables";
+
+.calculate-cost-section {
+  background-color: $color-black;
+  padding: 0px 20px;
+  position: relative;
+
+  .text-container {
+    h2 {
+      padding: 20px 0px;
+      color: $color-text-light;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    p {
+      color: $color-text-light;
+      font-size: 1rem;
+      margin: 15px 0;
+    }
+
+    .btn {
+      margin: 20px 0px;
+      padding: 10px;
+      background-color: $color-yellow;
+      color: $color-dark;
+      font-weight: normal;
+      border: none;
+      &:hover {
+        background-color: darken($color-yellow, 10%);
+      }
+    }
+  }
+
+  .image-container {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      height: 450px;
+      width: auto;
+    }
+    @media (max-width: 768px) {
+      img {
+        height: 250px;
+      }
+    }
+  }
+}

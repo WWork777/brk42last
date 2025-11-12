@@ -1,0 +1,148 @@
+@import "../_variables";
+
+.reviews-carousel {
+  position: relative;
+  padding: 40px 0;
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+  }
+
+  .text-under-title {
+    font-size: 2rem;
+
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 50px; // Ширина градиента
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  &::before {
+    left: 0;
+    background: linear-gradient(to right, #191a1c, #191a1c, #191a1c00);
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(to left, #191a1c, #191a1c, #191a1c00);
+  }
+
+  .header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .filter-buttons {
+      .btn {
+        font-size: 14px;
+        font-weight: bold;
+        padding: 5px 10px;
+        transition: all 0.3s ease;
+
+        &.btn-primary {
+          background-color: $color-yellow; // Жёлтый цвет для активной кнопки
+          color: $color-black;
+          border: none;
+
+          &:hover {
+            background-color: lighten($color-yellow, 10%);
+          }
+        }
+
+        &.btn-outline-primary {
+          border: 1px solid $color-yellow;
+          color: $color-yellow;
+
+          &:hover {
+            background-color: $color-yellow;
+            color: $color-black;
+          }
+        }
+      }
+    }
+  }
+
+  .review-card {
+    color: $color-text-light;
+    min-height: 230px;
+    background: $color-black;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px;
+
+    .review-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+
+      .badge {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+      }
+
+      h5 {
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin: 0;
+      }
+
+      small {
+        font-size: 1.1;
+        color: $color-text-light;
+      }
+      img {
+        margin-right: 10px;
+      }
+    }
+
+    .rating {
+      color: $color-yellow;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .btn-link {
+      color: $color-yellow;
+      font-weight: bold;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .reviews-carousel {
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+}

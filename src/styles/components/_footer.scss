@@ -1,0 +1,51 @@
+.footer {
+  background-color: #000;
+  color: #fff;
+  padding: 40px 20px;
+
+  h4 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin-bottom: 10px;
+      .footer-contacts {
+        font-size: 24px;
+      }
+
+      a {
+        color: #fff;
+
+        text-decoration: none;
+
+        &:hover {
+          color: #ff0;
+        }
+      }
+    }
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+
+    a {
+      font-size: 1.5rem;
+      color: #fff;
+      transition: color 0.3s;
+      img {
+        height: 40px;
+      }
+
+      &:hover {
+        color: #ff0;
+      }
+    }
+  }
+}
