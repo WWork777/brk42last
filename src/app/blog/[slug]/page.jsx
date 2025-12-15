@@ -6,6 +6,8 @@ import Link from "next/link";
 export async function generateMetadata({ params }) {
   const article = articlesData.find((a) => a.slug === params.slug);
 
+  
+
   if (!article) {
     return {
       title: "Статья не найдена",
@@ -72,6 +74,10 @@ function formatDate(dateString) {
   });
 }
 
+  const formatTextWithLineBreaks = (text) => {
+    return text.replace(/\n/g, '<br />');
+  };
+
 export default function ArticlePage({ params }) {
   const article = articlesData.find((a) => a.slug === params.slug);
 
@@ -109,7 +115,9 @@ export default function ArticlePage({ params }) {
       {/* Контент статьи */}
       <div
         className={styles.articleContent}
-        dangerouslySetInnerHTML={{ __html: article.text }}
+        dangerouslySetInnerHTML={{ 
+          __html: formatTextWithLineBreaks(article.text) 
+        }}
       />
 
       {/* Дополнительная кнопка возврата в конце */}
