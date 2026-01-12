@@ -9,9 +9,9 @@ import { getCurrentSiteConfig } from "@/constants/city";
 
 const socialLinks = [
   {
-    href: "https://wa.me/79609250870",
-    icon: "/icons/whatsapp.svg",
-    label: "WhatsApp",
+    href: "https://max.ru/u/f9LHodD0cOLYp11qSjGn6aGeOrHVYNXvPYGcBgeqEKrhiq-H5M3ARCkgbhI",
+    icon: "/icons/max.svg",
+    label: "Max",
   },
   {
     href: "mailto:bureniekemerovo@mail.ru",

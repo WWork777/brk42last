@@ -202,11 +202,11 @@ const Contacts = () => {
                 Позвонить нам
               </Link>
               <Link
-                href="https://wa.me/79609250870"
+                href="https://max.ru/u/f9LHodD0cOLYp11qSjGn6aGeOrHVYNXvPYGcBgeqEKrhiq-H5M3ARCkgbhI"
                 className="btn btn-yellow"
                 aria-label="Отправить заявку"
               >
-                Написать в WhatsApp
+                Написать в Max
               </Link>
               {/* {successMessage && (
                 <p className="success-message">{successMessage}</p>

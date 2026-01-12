@@ -713,10 +713,10 @@ const Calculator = () => {
                 </div>
                 <div className="col-12 text-center">
                   <Link
-                    href="https://wa.me/79609250870"
+                    href="https://max.ru/u/f9LHodD0cOLYp11qSjGn6aGeOrHVYNXvPYGcBgeqEKrhiq-H5M3ARCkgbhI"
                     className="btn btn-warning"
                   >
-                    Написать в WhatsApp
+                    Написать в Max
                   </Link>
                 </div>
               </form>

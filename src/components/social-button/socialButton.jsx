@@ -12,8 +12,8 @@ export default function SocialButton() {
         <h5>Свяжитесь с нами</h5>
       </div>
       <div className={`${styles.social_icons} ${isOpen ? styles.open : ""}`}>
-        <Link href="https://wa.me/79609250870">
-          <img src="/svg/wa.svg" className={styles.social_button_img} />
+        <Link href="https://max.ru/u/f9LHodD0cOLYp11qSjGn6aGeOrHVYNXvPYGcBgeqEKrhiq-H5M3ARCkgbhI">
+          <img src="/svg/max.svg" className={styles.social_button_img} />
         </Link>
         <Link href="https://vk.com/bureniekem">
           <img src="/svg/vk.svg" className={styles.social_button_img} />
