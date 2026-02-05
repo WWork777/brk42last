@@ -55,9 +55,6 @@ const Footer = () => {
               <li>
                 <Link href="/#contacts">Контакты</Link>
               </li>
-              <li>
-                <Link href="/privacy-policy">Политика конфиденциальности</Link>
-              </li>
             </ul>
           </div>
 
@@ -83,7 +80,18 @@ const Footer = () => {
             <ul>
               <li>ОГРН: 319420500029031</li>
               <li>ИНН: 420541299945 </li>
+              <li>ИП: Судаков Михаил Сергеевич</li>
+              <li style={{marginTop:"30px"}}>
+                <Link href="/docs/confidencialnost.pdf">Политика конфиденциальности</Link>
+              </li>
+              <li>
+                <Link href="/docs/obrabotka-pers-dannih.pdf">Политика обработки файлов cokkie</Link>
+              </li>
+              <li>
+                <Link href="/docs/polzovatelskoe-soglashenie.pdf">Пользовательское соглашение</Link>
+              </li>
             </ul>
+            
           </div>
 
           {/* Колонка "Контакты" */}
