@@ -66,6 +66,8 @@ const Contacts = () => {
     }));
   };
 
+  const [agreed, setAgreed] = useState(false);
+
   const validateForm = () => {
     let valid = true;
     const newErrors = { name: "", phone: "", comments: "" };
@@ -85,6 +87,11 @@ const Contacts = () => {
 
     if (!/^89\d{9}$/.test(formData.phone)) {
       newErrors.phone = "Телефон должен начинаться с 89 и содержать 11 цифр.";
+      valid = false;
+    }
+
+    if (!agreed == true){
+      newErrors.agree = "Оставьте согласие на обработку персональных данных";
       valid = false;
     }
 
@@ -145,7 +152,7 @@ const Contacts = () => {
               className="contact-form"
               aria-label="Форма обратной связи"
             >
-              {/* <div className="form-group">
+              <div className="form-group">
                 <input
                   type="text"
                   id="name"
@@ -193,14 +200,40 @@ const Contacts = () => {
                 {errors.comments && (
                   <div className="invalid-feedback">{errors.comments}</div>
                 )}
-              </div> */}
-              <Link
-                href="tel:+7 (960) 925-08-70"
+              </div>
+              <div className="col-12 mb-3">
+                  <div className={`form-check ${
+                      errors.agree ? "is-invalid" : ""
+                    }`}>
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="privacyPolicy"
+                      checked={agreed}
+                      onChange={(e) => setAgreed(e.target.checked)}
+                    />
+                    
+                    
+                    <label className=" small" htmlFor="privacyPolicy" style={{color:"white"}}>
+                      Я согласен на обработку <a className="persdannie" href="/docs/confidencialnost.pdf" target="_blank">персональных данных</a>
+                    </label>
+                    
+                  </div>
+                  {errors.agree && (
+                      <div className="invalid-feedback">{errors.agree}</div>
+                    )}
+                </div>
+              <button
+                type="submit"
+                // href="tel:+7 (960) 925-08-70"
                 className="btn btn-yellow"
                 aria-label="Отправить заявку"
               >
-                Позвонить нам
-              </Link>
+                Отправить
+              </button>
+              {successMessage && (
+                <p className="success-message">{successMessage}</p>
+              )}
               <Link
                 href="https://max.ru/u/f9LHodD0cOLYp11qSjGn6aGeOrHVYNXvPYGcBgeqEKrhiq-H5M3ARCkgbhI"
                 className="btn btn-yellow"
@@ -208,9 +241,7 @@ const Contacts = () => {
               >
                 Написать в Max
               </Link>
-              {/* {successMessage && (
-                <p className="success-message">{successMessage}</p>
-              )} */}
+              
             </form>
             <h4>Контакты ООО «{currentSite.name}</h4>
             <ContactInfo />

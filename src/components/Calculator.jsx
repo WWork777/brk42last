@@ -11,6 +11,7 @@ const Calculator = () => {
   const [depth, setDepth] = useState(30);
   const [selectedSetup, setSelectedSetup] = useState(null);
   const [includeEquipment, setIncludeEquipment] = useState(true);
+  const [agreed, setAgreed] = useState(false);
   const [contactForm, setContactForm] = useState({
     phone: "",
     name: "",
@@ -24,7 +25,7 @@ const Calculator = () => {
   });
 
   const validateForm = () => {
-    const newErrors = { name: "", phone: "", location: "" };
+    const newErrors = { name: "", phone: "", location: "", agree: "" };
     let valid = true;
 
     if (!contactForm.name.trim()) {
@@ -44,6 +45,11 @@ const Calculator = () => {
 
     if (!/^89\d{9}$/.test(contactForm.phone)) {
       newErrors.phone = "Телефон должен начинаться с 89 и содержать 11 цифр.";
+      valid = false;
+    }
+
+    if (!agreed == true){
+      newErrors.agree = "Оставьте согласие на обработку персональных данных";
       valid = false;
     }
 
@@ -76,6 +82,7 @@ const Calculator = () => {
           setDepth(30);
           setIncludeEquipment(true);
           setSelectedSetup(null);
+          
         } else {
           alert("Ошибка при отправке заявки");
         }
@@ -647,7 +654,7 @@ const Calculator = () => {
             <div className="col-md-6">
               <form onSubmit={handleFormSubmit} className="row" noValidate>
                 {/* Поле для имени */}
-                {/* <div className="col-12 mb-3">
+                <div className="col-12 mb-3">
                   <input
                     type="text"
                     name="name"
@@ -662,10 +669,10 @@ const Calculator = () => {
                   {errors.name && (
                     <div className="invalid-feedback">{errors.name}</div>
                   )}
-                </div> */}
+                </div>
 
                 {/* Поле для телефона */}
-                {/* <div className="col-12 mb-3">
+                <div className="col-12 mb-3">
                   <input
                     type="tel"
                     name="phone"
@@ -682,10 +689,10 @@ const Calculator = () => {
                   {errors.phone && (
                     <div className="invalid-feedback">{errors.phone}</div>
                   )}
-                </div> */}
+                </div>
 
                 {/* Поле для места бурения */}
-                {/* <div className="col-12 mb-3">
+                <div className="col-12 mb-3">
                   <input
                     type="text"
                     name="location"
@@ -700,16 +707,39 @@ const Calculator = () => {
                   {errors.location && (
                     <div className="invalid-feedback">{errors.location}</div>
                   )}
-                </div> */}
+                </div>
+                <div className="col-12 mb-3">
+                  <div className={`form-check ${
+                      errors.agree ? "is-invalid" : ""
+                    }`}>
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="privacyPolicy"
+                      checked={agreed}
+                      onChange={(e) => setAgreed(e.target.checked)}
+                    />
+                    
+                    
+                    <label className="form-check-label small" htmlFor="privacyPolicy" style={{color:"white"}}>
+                      Я согласен на обработку <a className="persdannie" href="/docs/confidencialnost.pdf" target="_blank">персональных данных</a>
+                    </label>
+                    
+                  </div>
+                  {errors.agree && (
+                      <div className="invalid-feedback">{errors.agree}</div>
+                    )}
+                </div>
 
                 {/* Кнопка отправки */}
                 <div className="col-12 text-center">
-                  <Link
-                    href="tel:+7 (960) 925-08-70"
+                  <button
+                    type="submit"
+                    // href="tel:+7 (960) 925-08-70"
                     className="btn btn-warning"
                   >
                     Позвонить нам
-                  </Link>
+                  </button>
                 </div>
                 <div className="col-12 text-center">
                   <Link

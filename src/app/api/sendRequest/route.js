@@ -61,18 +61,18 @@ export async function POST(req) {
     }
 
     const transporter = nodemailer.createTransport({
-      host: "smtp.mail.ru",
+      host: "smtp.yandex.ru",
       port: 465,
       secure: true,
       auth: {
-        user: "request.brk42@mail.ru",
+        user: "sersur42@yandex.ru",
         pass: process.env.MAIL_ACCESS_PASS,
       },
     });
 
     const mailOptions = {
-      from: `"${site.name}" <request.brk42@mail.ru>`,
-      to: "bureniekemerovo@mail.ru",
+      from: `"${site.name}" sersur42@yandex.ru`,
+      to: "sersur42@yandex.ru",
       subject: `Новая заявка (${site.clearCity})`,
       text: message,
     };
