@@ -72,7 +72,7 @@ export async function POST(req) {
 
     const mailOptions = {
       from: `"${site.name}" sersur42@yandex.ru`,
-      to: "sersur42@yandex.ru",
+      to: "bureniekemerovo@mail.ru",
       subject: `Новая заявка (${site.clearCity})`,
       text: message,
     };
