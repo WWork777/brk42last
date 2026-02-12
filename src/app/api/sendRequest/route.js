@@ -77,7 +77,31 @@ export async function POST(req) {
       text: message,
     };
 
+    
+
     await transporter.sendMail(mailOptions);
+    const Phone = "79609250870";
+    const idInstance = "3100513246";
+    const apiTokenInstance =
+      "3dea5b752b074ae9811dc46deb0fc361602806e5214448e6b1";
+    const maxResponse = await fetch(
+      `https://api.green-api.com/waInstance${idInstance}/SendMessage/${apiTokenInstance}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chatId: `${Phone}@c.us`,
+          message: message,
+        }),
+      },
+    );
+      
+    // if (maxResponse.ok) {
+    //   console.log("заявка в макс пришла");
+    // }
+    // else{
+    //   console.log("ошибка");
+    // }
 
     return new Response(
       JSON.stringify({ success: true, message: "Заявка успешно отправлена!" }),
@@ -85,10 +109,14 @@ export async function POST(req) {
         status: 200,
       }
     );
+
+    
   } catch (error) {
     console.error("Ошибка:", error.message);
     return new Response(JSON.stringify({ success: false, message: error.message }), {
       status: 500,
     });
   }
+
+  
 }
