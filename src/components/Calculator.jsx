@@ -738,7 +738,7 @@ const Calculator = () => {
                     // href="tel:+7 (960) 925-08-70"
                     className="btn btn-warning"
                   >
-                    Позвонить нам
+                    Отправить заявку
                   </button>
                 </div>
                 <div className="col-12 text-center">
