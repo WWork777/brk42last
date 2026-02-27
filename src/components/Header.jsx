@@ -79,7 +79,7 @@ const Header = () => {
               </ul>
             </li>
             <li>
-              <Link href="/#reviews">Отзывы</Link>
+              <Link href="/faq">Ответы на вопросы</Link>
             </li>
             <li>
               <Link href="/about-us">О нас</Link>
@@ -144,8 +144,8 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link href="/#reviews" onClick={closeMenu}>
-                Отзывы
+              <Link href="/faq" onClick={closeMenu}>
+                Ответы на вопросы
               </Link>
             </li>
             <li>

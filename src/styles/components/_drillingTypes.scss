@@ -61,13 +61,10 @@
 
           border-radius: 10px;
           background-position: center;
-          background-image: linear-gradient(
-              to right,
-              #333333 1px,
-              transparent 1px
-            ),
+          background-image:
+            linear-gradient(to right, #333333 1px, transparent 1px),
             /* Вертикальные линии */
-              linear-gradient(to bottom, #333333 1px, transparent 1px); /* Горизонтальные линии */
+            linear-gradient(to bottom, #333333 1px, transparent 1px); /* Горизонтальные линии */
           background-size: 40px 40px; /* Размер ячейки сетки */
         }
         .btn-3d-view {

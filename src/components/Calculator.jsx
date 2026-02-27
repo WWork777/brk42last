@@ -1,7 +1,8 @@
+// Calculator.jsx
 "use client";
 
 import Slider from "react-slick";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../styles/components/_calculator.scss";
 import { getCurrentSiteConfig } from "@/constants/city";
 import Link from "next/link";
@@ -11,7 +12,6 @@ const Calculator = () => {
   const [depth, setDepth] = useState(30);
   const [selectedSetup, setSelectedSetup] = useState(null);
   const [includeEquipment, setIncludeEquipment] = useState(true);
-  const [agreed, setAgreed] = useState(false);
   const [contactForm, setContactForm] = useState({
     phone: "",
     name: "",
@@ -24,8 +24,12 @@ const Calculator = () => {
     location: "",
   });
 
+  // Refs для слайдеров
+  const pipeSliderRef = useRef(null);
+  const setupSliderRef = useRef(null);
+
   const validateForm = () => {
-    const newErrors = { name: "", phone: "", location: "", agree: "" };
+    const newErrors = { name: "", phone: "", location: "" };
     let valid = true;
 
     if (!contactForm.name.trim()) {
@@ -45,11 +49,6 @@ const Calculator = () => {
 
     if (!/^89\d{9}$/.test(contactForm.phone)) {
       newErrors.phone = "Телефон должен начинаться с 89 и содержать 11 цифр.";
-      valid = false;
-    }
-
-    if (!agreed == true){
-      newErrors.agree = "Оставьте согласие на обработку персональных данных";
       valid = false;
     }
 
@@ -82,7 +81,6 @@ const Calculator = () => {
           setDepth(30);
           setIncludeEquipment(true);
           setSelectedSetup(null);
-          
         } else {
           alert("Ошибка при отправке заявки");
         }
@@ -118,36 +116,94 @@ const Calculator = () => {
     );
   };
 
-  const carouselSettings = {
+  // Настройки для слайдера с трубами
+  const pipeSliderSettings = {
     dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 2, // Показываем 3 слайда
-
-    nextArrow: <CustomNextArrow />,
-    prevArrow: <CustomPrevArrow />,
+    slidesToShow: 2,
     slidesToScroll: 1,
     autoplay: false,
-    autoplaySpeed: 3000,
     arrows: true,
+    nextArrow: <CustomNextArrow />,
+    prevArrow: <CustomPrevArrow />,
+    dotsClass: "slick-dots custom-dots", // Кастомный класс для точек
+    appendDots: (dots) => (
+      <div className="pagination-wrapper">
+        <ul className="custom-dots-list">{dots}</ul>
+      </div>
+    ),
+    customPaging: (i) => (
+      <button className="custom-dot" aria-label={`Перейти к слайду ${i + 1}`}>
+        <span></span>
+      </button>
+    ),
     responsive: [
       {
-        breakpoint: 768, // Для мобильных
+        breakpoint: 1024,
         settings: {
-          arrows: false,
           slidesToShow: 1,
           slidesToScroll: 1,
+          // arrows: true,
+          dots: true,
         },
       },
       {
-        breakpoint: 1024, // Для планшетов
+        breakpoint: 768,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          arrows: false,
+          dots: true,
         },
       },
     ],
   };
+
+  // Настройки для слайдера с обустройством
+  const setupSliderSettings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    autoplay: false,
+    arrows: true,
+    nextArrow: <CustomNextArrow />,
+    prevArrow: <CustomPrevArrow />,
+    dotsClass: "slick-dots custom-dots",
+    appendDots: (dots) => (
+      <div className="pagination-wrapper">
+        <ul className="custom-dots-list">{dots}</ul>
+      </div>
+    ),
+    customPaging: (i) => (
+      <button className="custom-dot" aria-label={`Перейти к слайду ${i + 1}`}>
+        <span></span>
+      </button>
+    ),
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          // arrows: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: false,
+          dots: true,
+        },
+      },
+    ],
+  };
+
   const [currentSite, setCurrentSite] = useState("");
 
   useEffect(() => {
@@ -161,6 +217,7 @@ const Calculator = () => {
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
+
   const pipes = [
     {
       id: 1,
@@ -384,31 +441,18 @@ const Calculator = () => {
   };
 
   const calculateCost = () => {
-    if (!selectedPipe) return 0; // Если труба не выбрана, стоимость равна 0.
-
-    // Расчёт стоимости трубы
+    if (!selectedPipe) return 0;
     const pipeCost = selectedPipe.price * depth;
-
-    // Учитываем комплект оборудования только если он включён
     const equipmentCost = includeEquipment
       ? calculateEquipmentCost(depth).total
       : 0;
-
-    // Расчёт стоимости обустройства
     const setupCost = selectedSetup ? selectedSetup.price : 0;
-
-    // Итоговая стоимость
     return pipeCost + equipmentCost + setupCost;
   };
 
   const calculateCostDepth = () => {
-    if (!selectedPipe) return 0; // Если труба не выбрана, стоимость равна 0.
-
-    // Расчёт стоимости трубы
-    const pipeCost = selectedPipe.price * depth;
-
-    // Итоговая стоимость
-    return pipeCost;
+    if (!selectedPipe) return 0;
+    return selectedPipe.price * depth;
   };
 
   const toggleSetupSelection = (setup) => {
@@ -419,12 +463,9 @@ const Calculator = () => {
     const { name, value } = e.target;
 
     if (name === "phone") {
-      // Разрешаем ввод только цифр и начинаем с 89
       if (!/^\d*$/.test(value)) {
-        return; // Игнорируем ввод, если это не цифра
+        return;
       }
-
-      // Ограничиваем длину до 11 символов
       if (value.length > 11) {
         return;
       }
@@ -458,58 +499,57 @@ const Calculator = () => {
 
         {/* Шаг 1 */}
         <div className="calculator container py-5">
-          <div className="">
-            <h3 className=" step-title mb-3">
+          <div className="slider-section">
+            <h3 className="step-title mb-3">
               Шаг 1. Выберите конструкцию скважины
             </h3>
-            <Slider {...carouselSettings}>
-              {pipes.map((pipe) => (
-                <div key={pipe.id}>
-                  <div
-                    onClick={() => setSelectedPipe(pipe)}
-                    className={`pipe-card ${
-                      selectedPipe?.id === pipe.id ? "selected" : ""
-                    }`}
-                  >
-                    <div className="pipe-content d-flex align-items-center">
-                      {/* Картинка слева */}
-                      <div>
-                        <div className="pipe-image me-3">
-                          <img
-                            src={pipe.img}
-                            alt={pipe.title}
-                            className="img-fluid"
-                          />
+            <div className="slider-container">
+              <Slider ref={pipeSliderRef} {...pipeSliderSettings}>
+                {pipes.map((pipe) => (
+                  <div key={pipe.id}>
+                    <div
+                      onClick={() => setSelectedPipe(pipe)}
+                      className={`pipe-card ${
+                        selectedPipe?.id === pipe.id ? "selected" : ""
+                      }`}
+                    >
+                      <div className="pipe-content d-flex align-items-center">
+                        <div>
+                          <div className="pipe-image me-3">
+                            <img
+                              src={pipe.img}
+                              alt={pipe.title}
+                              className="img-fluid"
+                            />
+                          </div>
                         </div>
-                      </div>
-
-                      {/* Текст справа */}
-                      <div className="pipe-text">
-                        <h4>{pipe.title}</h4>
-                        <p>{pipe.description}</p>
-                        <div className="price">{pipe.price} ₽</div>
-                        <small>{pipe.warranty}</small>
-
-                        <button className="btn-select btn btn-warning">
-                          {selectedPipe?.id === pipe.id ? "Выбрано" : "Выбрать"}
-                          {selectedPipe?.id === pipe.id && (
-                            <i className="bi bi-check-lg m-2"></i>
-                          )}
-                        </button>
+                        <div className="pipe-text">
+                          <h4>{pipe.title}</h4>
+                          <p>{pipe.description}</p>
+                          <div className="price">{pipe.price} ₽</div>
+                          <small>{pipe.warranty}</small>
+                          <button className="btn-select btn btn-warning">
+                            {selectedPipe?.id === pipe.id
+                              ? "Выбрано"
+                              : "Выбрать"}
+                            {selectedPipe?.id === pipe.id && (
+                              <i className="bi bi-check-lg m-2"></i>
+                            )}
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </Slider>
+                ))}
+              </Slider>
+            </div>
           </div>
         </div>
 
         {/* Шаг 2 */}
         <div className="mb-5 container">
-          <h3 className="step-title  ">Шаг 2. Выберите глубину скважины</h3>
-          <div className="depth-selector ">
-            {/* Ползунок */}
+          <h3 className="step-title">Шаг 2. Выберите глубину скважины</h3>
+          <div className="depth-selector">
             <div className="depth-values d-flex justify-content-between mb-5">
               <span className="depth-label">30 м</span>
               <span className="depth-value">{depth} м</span>
@@ -523,8 +563,6 @@ const Calculator = () => {
               onChange={(e) => setDepth(Number(e.target.value))}
               className="form-range depth-range"
             />
-
-            {/* Значения глубины */}
           </div>
         </div>
 
@@ -585,48 +623,49 @@ const Calculator = () => {
 
         {/* Шаг 4 */}
         <div className="calculator container py-5">
-          <div className="">
-            <h3 className=" step-title mb-3">
-              Шаг 4. Выберите способ обустройства скважины ( необязательно )
+          <div className="slider-section">
+            <h3 className="step-title mb-3">
+              Шаг 4. Выберите способ обустройства скважины (необязательно)
             </h3>
-            <Slider {...carouselSettings}>
-              {setups.map((setup) => (
-                <div key={setup.id}>
-                  <div
-                    onClick={() => toggleSetupSelection(setup)}
-                    className={`setup-card d-flex align-items-center ${
-                      selectedSetup?.id === setup.id ? "selected" : ""
-                    }`}
-                  >
-                    {/* Картинка слева */}
-                    <div>
-                      <div className="setup-image">
-                        <img
-                          src={setup.img}
-                          alt={setup.title}
-                          className="img-fluid"
-                        />
+            <div className="slider-container">
+              <Slider ref={setupSliderRef} {...setupSliderSettings}>
+                {setups.map((setup) => (
+                  <div key={setup.id}>
+                    <div
+                      onClick={() => toggleSetupSelection(setup)}
+                      className={`setup-card d-flex align-items-center ${
+                        selectedSetup?.id === setup.id ? "selected" : ""
+                      }`}
+                    >
+                      <div>
+                        <div className="setup-image">
+                          <img
+                            src={setup.img}
+                            alt={setup.title}
+                            className="img-fluid"
+                          />
+                        </div>
+                      </div>
+                      <div className="setup-text">
+                        <h4>{setup.title}</h4>
+                        <p>{setup.description}</p>
+                        <div className="price">{setup.price} ₽</div>
+                        <button className="btn-select btn btn-warning">
+                          {`${
+                            selectedSetup?.id === setup.id
+                              ? "Убрать"
+                              : "Выбрать"
+                          }`}
+                          {selectedSetup?.id === setup.id && (
+                            <i className="bi bi-x-lg m-2"></i>
+                          )}
+                        </button>
                       </div>
                     </div>
-
-                    {/* Текст справа */}
-                    <div className="setup-text">
-                      <h4>{setup.title}</h4>
-                      <p>{setup.description}</p>
-                      <div className="price">{setup.price} ₽</div>
-                      <button className="btn-select btn btn-warning ">
-                        {` ${
-                          selectedSetup?.id === setup.id ? "Убрать" : "Выбрать"
-                        }`}
-                        {selectedSetup?.id === setup.id && (
-                          <i className="bi bi-x-lg m-2"></i>
-                        )}
-                      </button>
-                    </div>
                   </div>
-                </div>
-              ))}
-            </Slider>
+                ))}
+              </Slider>
+            </div>
           </div>
         </div>
 
@@ -642,104 +681,21 @@ const Calculator = () => {
         {/* Форма */}
         <div className="container contact-form mt-5">
           <div className="row">
-            {/* Текст слева */}
             <div className="col-md-6">
               <h4>
                 Свяжитесь с нами, чтобы получить подробную консультацию инженера
                 и выезд на объект бесплатно
               </h4>
             </div>
-
-            {/* Форма справа */}
             <div className="col-md-6">
               <form onSubmit={handleFormSubmit} className="row" noValidate>
-                {/* Поле для имени */}
-                <div className="col-12 mb-3">
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Ваше имя"
-                    value={contactForm.name}
-                    onChange={handleContactChange}
-                    className={`form-control ${
-                      errors.name ? "is-invalid" : ""
-                    }`}
-                    required
-                  />
-                  {errors.name && (
-                    <div className="invalid-feedback">{errors.name}</div>
-                  )}
-                </div>
-
-                {/* Поле для телефона */}
-                <div className="col-12 mb-3">
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="Ваш телефон"
-                    value={contactForm.phone}
-                    onChange={handleContactChange}
-                    pattern="89\d{9}"
-                    maxLength="11"
-                    className={`form-control ${
-                      errors.phone ? "is-invalid" : ""
-                    }`}
-                    required
-                  />
-                  {errors.phone && (
-                    <div className="invalid-feedback">{errors.phone}</div>
-                  )}
-                </div>
-
-                {/* Поле для места бурения */}
-                <div className="col-12 mb-3">
-                  <input
-                    type="text"
-                    name="location"
-                    placeholder="Место бурения"
-                    value={contactForm.location}
-                    onChange={handleContactChange}
-                    className={`form-control ${
-                      errors.location ? "is-invalid" : ""
-                    }`}
-                    required
-                  />
-                  {errors.location && (
-                    <div className="invalid-feedback">{errors.location}</div>
-                  )}
-                </div>
-                <div className="col-12 mb-3">
-                  <div className={`form-check ${
-                      errors.agree ? "is-invalid" : ""
-                    }`}>
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id="privacyPolicy"
-                      checked={agreed}
-                      onChange={(e) => setAgreed(e.target.checked)}
-                    />
-                    
-                    
-                    <label className="form-check-label small" htmlFor="privacyPolicy" style={{color:"white"}}>
-                      Я согласен на обработку <a className="persdannie" href="/docs/confidencialnost.pdf" target="_blank">персональных данных</a>
-                    </label>
-                    
-                  </div>
-                  {errors.agree && (
-                      <div className="invalid-feedback">{errors.agree}</div>
-                    )}
-                </div>
-
-                {/* Кнопка отправки */}
                 <div className="col-12 text-center">
-                  <button
-                    type="submit"
-                    // href="tel:+7 (960) 925-08-70"
+                  <Link
+                    href="tel:+7 (960) 925-08-70"
                     className="btn btn-warning"
                   >
-                    Отправить заявку
-                  </button>
+                    Позвонить нам
+                  </Link>
                 </div>
                 <div className="col-12 text-center">
                   <Link
@@ -747,6 +703,11 @@ const Calculator = () => {
                     className="btn btn-warning"
                   >
                     Написать в Max
+                  </Link>
+                </div>
+                <div className="col-12 text-center">
+                  <Link href="/faq" className="btn btn-warning">
+                    Ответы на вопросы
                   </Link>
                 </div>
               </form>

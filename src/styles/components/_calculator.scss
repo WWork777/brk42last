@@ -1,5 +1,39 @@
 @import "../variables";
 
+.slick-dots-calc {
+  li {
+    button {
+      &::before {
+        font-family: "slick";
+        font-size: 7px;
+        line-height: 20px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        content: "•"; // Символ точки
+        text-align: center;
+        color: $color-text-light; // Белый цвет для неактивных точек
+        transition: all 0.3s ease; // Плавный переход
+
+        @media (max-width: 992px) {
+          margin-top: 50px;
+        }
+      }
+    }
+
+    &.slick-active {
+      button {
+        &::before {
+          color: $color-yellow; // Жёлтый цвет для активной точки
+          transform: scale(1.3); // Увеличиваем активную точку
+        }
+      }
+    }
+  }
+}
+
 .calculator {
   background-color: $color-dark;
   color: $color-text-light;
@@ -539,10 +573,10 @@
   }
 }
 
-.persdannie{
+.persdannie {
   color: white;
 
-  &:hover{
+  &:hover {
     color: #fff500;
   }
 }

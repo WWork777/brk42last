@@ -14,15 +14,18 @@ const Model3DModal = dynamic(() => import("../components/Model3DModal"), {
 
 const CustomArrow = ({ direction, onClick }) => (
   <button
-    className={`custom-arrow custom-${direction}`}
+    className={`custom-arrow-wells custom-${direction}`}
     onClick={onClick}
     aria-label={direction === "next" ? "Следующий слайд" : "Предыдущий слайд"}
     style={{
       top: "50%",
       [direction === "next" ? "right" : "left"]: "-10px",
-      backgroundColor: "black",
-      color: "yellow",
-      scale: 1.5,
+      backgroundColor: "#fff500",
+      color: "black",
+      border: "1px solid black",
+      scale: 1.1,
+      left: direction === "prev" ? "5px" : "auto",
+      right: direction === "next" ? "5px" : "auto",
     }}
   >
     <i className={`bi bi-chevron-${direction === "next" ? "right" : "left"}`} />
@@ -45,7 +48,7 @@ export default function SetupWells() {
           embed: models[key].embed,
           animated: models[key].animated,
         })),
-    []
+    [],
   );
 
   const [activeSlide, setActiveSlide] = useState(0);
@@ -84,7 +87,7 @@ export default function SetupWells() {
       {
         breakpoint: 768,
         settings: {
-          arrows: false,
+          // arrows: false,
           swipe: true,
           slidesToShow: 1,
           slidesToScroll: 1,
