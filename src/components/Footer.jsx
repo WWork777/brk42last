@@ -177,7 +177,7 @@ const Footer = () => {
               <div className="developer-info">
                 <span className="developer-name">Вирлаб</span>
                 <span className="developer-description">
-                  создание и продвижение сайтов
+                  Создание и продвижение сайтов
                 </span>
               </div>
             </a>
