@@ -35,6 +35,7 @@ const Footer = () => {
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
+
   return (
     <footer className="footer">
       <div className="container">
@@ -81,17 +82,22 @@ const Footer = () => {
               <li>ОГРН: 319420500029031</li>
               <li>ИНН: 420541299945 </li>
               <li>ИП: Судаков Михаил Сергеевич</li>
-              <li style={{marginTop:"30px"}}>
-                <Link href="/docs/confidencialnost.pdf">Политика конфиденциальности</Link>
+              <li style={{ marginTop: "30px" }}>
+                <Link href="/docs/confidencialnost.pdf">
+                  Политика конфиденциальности
+                </Link>
               </li>
               <li>
-                <Link href="/docs/obrabotka-pers-dannih.pdf">Политика обработки файлов cokkie</Link>
+                <Link href="/docs/obrabotka-pers-dannih.pdf">
+                  Политика обработки файлов cookie
+                </Link>
               </li>
               <li>
-                <Link href="/docs/polzovatelskoe-soglashenie.pdf">Пользовательское соглашение</Link>
+                <Link href="/docs/polzovatelskoe-soglashenie.pdf">
+                  Пользовательское соглашение
+                </Link>
               </li>
             </ul>
-            
           </div>
 
           {/* Колонка "Контакты" */}
@@ -147,6 +153,34 @@ const Footer = () => {
                 </a>
               ))}
             </div>
+          </div>
+        </div>
+
+        {/* Блок о разработчике - увеличенная версия */}
+        <div className="developer-block">
+          <div className="developer-content">
+            <span className="developer-label">Разработка сайта</span>
+            <a
+              href="https://virlab42.ru"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="developer-link"
+              aria-label="Сайт разработчика"
+            >
+              <div className="developer-logo-wrapper">
+                <img
+                  src="/site.png"
+                  alt="Логотип разработчика"
+                  className="developer-logo"
+                />
+              </div>
+              <div className="developer-info">
+                <span className="developer-name">Вирлаб</span>
+                <span className="developer-description">
+                  создание и продвижение сайтов
+                </span>
+              </div>
+            </a>
           </div>
         </div>
       </div>
