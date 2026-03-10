@@ -1,6 +1,7 @@
 # *
 User-agent: *
 Allow: /
+Clean-param: etext /
 
 # Googlebot
 User-agent: Googlebot
