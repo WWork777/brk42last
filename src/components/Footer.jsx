@@ -42,7 +42,7 @@ const Footer = () => {
         <div className="row">
           {/* Колонка "Общее" */}
           <div className="col-md-3 col-sm-6">
-            <h4>Общее</h4>
+            <p className="navTop">Общее</p>
             <ul>
               <li>
                 <Link href="/karta-glubin-skvazhin">Карта глубин</Link>
@@ -61,7 +61,7 @@ const Footer = () => {
 
           {/* Колонка "Продукция" */}
           <div className="col-md-3 col-sm-6">
-            <h4>Продукция</h4>
+            <p className="navTop">Общее</p>
             <ul>
               <li>
                 <Link href="/repair">Ремонт скважин</Link>
@@ -77,7 +77,7 @@ const Footer = () => {
 
           {/* Колонка "Коллекции" */}
           <div className="col-md-3 col-sm-6">
-            <h4>Коллекции</h4>
+            <p className="navTop">Общее</p>
             <ul>
               <li>ОГРН: 319420500029031</li>
               <li>ИНН: 420541299945 </li>
@@ -102,7 +102,7 @@ const Footer = () => {
 
           {/* Колонка "Контакты" */}
           <div className="col-md-3 col-sm-6">
-            <h4>Контакты</h4>
+            <p className="navTop">Общее</p>
             <ul>
               <li>
                 <i

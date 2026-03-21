@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import "../styles/components/_mapFrame.scss";
 import { getCurrentSiteConfig } from "@/constants/city";
 import Image from "next/image";
-const MapFrame = () => {
+const MapFrame = ({ isH1 = false }) => {
   const [currentSite, setCurrentSite] = useState('');
   
     useEffect(() => {
@@ -24,7 +24,11 @@ const MapFrame = () => {
         <header className="text-with-icon">
           <i className="bi bi-geo-alt-fill icon"></i>
           <div className="text-content">
-            <h2 className="map-title">Карта глубин скважин</h2>
+            {isH1 ? (
+              <h1 className="map-title">Карта глубин скважин</h1>
+            ) : (
+              <h2 className="map-title">Карта глубин скважин</h2>
+            )}
             <p className="map-description">
               Ознакомьтесь с картой глубин скважин для бурения в {currentSite.city} и {' '}
               {currentSite.oblast}. Эта информация поможет вам выбрать

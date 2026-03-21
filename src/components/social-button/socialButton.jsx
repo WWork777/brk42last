@@ -9,7 +9,9 @@ export default function SocialButton() {
   return (
     <div className={styles.social_wrapper}>
       <div className={styles.social_button} onClick={() => setIsOpen(!isOpen)}>
-        <h5>Свяжитесь с нами</h5>
+        <p className="titlebtn" style={{ fontSize: "1.25rem", margin: "0" }}>
+          Свяжитесь с нами
+        </p>
       </div>
       <div className={`${styles.social_icons} ${isOpen ? styles.open : ""}`}>
         <Link href="https://max.ru/u/f9LHodD0cOLYp11qSjGn6aGeOrHVYNXvPYGcBgeqEKrhiq-H5M3ARCkgbhI">

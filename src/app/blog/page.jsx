@@ -64,8 +64,8 @@ export default function BlogPage({ searchParams }) {
       <div className={styles.articles}>
         {currentArticles.map((article) => (
           <div key={article.id} className={styles.articleCard}>
-            <img src={article.imageUrl} alt={article.title} />
-            <h2>{article.title}</h2>
+            <img src={article.imageUrl} alt={article.h1} />
+            <h2>{article.h1}</h2>
             <p>{article.description}</p>
             <a href={`/blog/${article.slug}`}>Читать далее</a>
           </div>

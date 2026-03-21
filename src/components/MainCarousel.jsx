@@ -91,7 +91,11 @@ const MainCarousel = () => {
             <article className="carousel-slide">
               <div className="carousel-content row">
                 <div className="carousel-text col-md-5">
-                  <h1>{slide.title}</h1>
+                  {slide.id === 1 ? (
+                    <h1>{slide.title}</h1>
+                  ) : (
+                    <h3>{slide.title}</h3>
+                  )}
                   <p>{slide.description}</p>
                   <Link className="btn btn-warning" href={slide.href}>
                     {slide.buttonText}

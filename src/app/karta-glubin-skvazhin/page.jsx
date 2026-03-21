@@ -61,7 +61,7 @@ export async function generateMetadata() {
 export default function MapPage() {
   return (
     <main className={styles.map}>
-      <MapFrame />
+      <MapFrame isH1={true} />
       <Contacts />
     </main>
   );

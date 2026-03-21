@@ -19,7 +19,7 @@ export async function generateMetadata(){
     openGraph: {
       title: `Ремонт скважин в ${currentSite.clearCity} - БРК ${currentSite.clearCity}`,
       description: "Ремонт водяных скважин. Устранение засоров, замена оборудования, восстановление работы скважин. Гарантия качества от БРК.",
-      url: "https://brk42.ru/repair",
+      url: "https://brk42.ru/about-us",
       type: "website",
       images: [
         {

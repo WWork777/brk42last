@@ -15,7 +15,7 @@ const VkLink = () => {
         ></div>
       </figure>
       <div className="vk-info">
-        <h2 className="vk-title">Подпишись на группу ВК и получи скидку</h2>
+        <h3 className="vk-title">Подпишись на группу ВК и получи скидку</h3>
         <p className="vk-subtitle">{groupName}</p>
         <div className="vk-rating">
           <span className="vk-stars" aria-label="Рейтинг группы 5 из 5">

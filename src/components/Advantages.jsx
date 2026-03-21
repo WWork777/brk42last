@@ -47,7 +47,7 @@ const Advantages = () => {
                   height={50}
                 />
                 <div>
-                  <h3>{advantage.title}</h3>
+                  <h4>{advantage.title}</h4>
                   <p>{advantage.description}</p>
                 </div>
               </article>

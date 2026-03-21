@@ -103,7 +103,7 @@ export default function ArticlePage({ params }) {
       </Link>
 
       {/* Заголовок */}
-      <h1>{article.title}</h1>
+      <h1>{article.h1}</h1>
 
       {/* Изображение */}
       <img
