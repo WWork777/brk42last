@@ -9,7 +9,10 @@ export default function SocialButton() {
   return (
     <div className={styles.social_wrapper}>
       <div className={styles.social_button} onClick={() => setIsOpen(!isOpen)}>
-        <p className="titlebtn" style={{ fontSize: "1.25rem", margin: "0" }}>
+        <p
+          className="titlebtn"
+          style={{ fontSize: "1.25rem", margin: "0", color: "black" }}
+        >
           Свяжитесь с нами
         </p>
       </div>

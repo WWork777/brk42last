@@ -47,7 +47,7 @@ const Advantages = () => {
                   height={50}
                 />
                 <div>
-                  <h4>{advantage.title}</h4>
+                  <h4 style={{ color: "white" }}>{advantage.title}</h4>
                   <p>{advantage.description}</p>
                 </div>
               </article>
