@@ -196,23 +196,19 @@ const DrillingTypes2 = () => {
                         src={model.imageUrl}
                         alt={`3D модель: ${model.title}`}
                         className="model-image"
-                        width={400}
-                        height={300}
-                        quality={80}
-                        style={{ width: "100%", height: "auto" }}
+                        fill // Заполняет весь родительский div
+                        sizes="(max-width: 768px) 100vw, 400px"
                         priority
+                        quality={90}
                       />
+                      {/* Кнопка 3D остается внутри, она будет позиционироваться поверх */}
                       {has3DModel(model) && (
                         <button
                           type="button"
                           className="btn-3d-view"
                           onClick={() => setIsModalOpen(true)}
-                          aria-label={`Открыть 3D-модель: ${model.title}`}
                         >
-                          <i
-                            className="bi bi-play-circle"
-                            style={{ marginRight: ".5rem" }}
-                          ></i>
+                          <i className="bi bi-play-circle"></i>
                           <span>Смотреть в 3D</span>
                         </button>
                       )}
