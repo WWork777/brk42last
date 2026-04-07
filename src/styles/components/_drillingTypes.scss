@@ -71,15 +71,16 @@
 
         .model-image {
           /* Ключевые свойства для одинакового вида */
-          object-position: center; // Центрирует изображение
+          object-position: center;
           width: 100% !important;
           height: 100% !important;
-          position: absolute; // Нужно для работы fill в Next.js Image
+          position: absolute;
           top: 0;
           left: 0;
           transition: transform 0.5s ease;
-          object-fit: contain;
-          padding: 10px;
+
+          object-fit: cover; // Было contain, станет cover (растянет на весь блок)
+          padding: 0;
         }
 
         &:hover .model-image {

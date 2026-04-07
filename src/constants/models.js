@@ -41,7 +41,7 @@ const models = {
       provider: "sketchfab",
       src: "https://sketchfab.com/models/8d641f59565341359418e6e2653785d8/embed",
     },
-    imageUrl: "/images/wwwwwwwwwwwwwwwwwww.gif",
+    imageUrl: "/images/тип1.gif",
     specs: [
       { icon: "bi-clock", label: "Срок службы:", value: "до 50 лет" },
       { icon: "bi-hammer", label: "Монтаж:", value: "1-2 дня" },
@@ -72,7 +72,7 @@ const models = {
       provider: "sketchfab",
       src: "https://sketchfab.com/models/f690c80bbed54f10930a01325cf64b1d/embed",
     },
-    imageUrl: "/images/transparent_model (2).gif",
+    imageUrl: "/images/тип2.gif",
     specs: [
       { icon: "bi-clock", label: "Срок службы:", value: "до 50 лет" },
       { icon: "bi-hammer", label: "Монтаж:", value: "1-2 дня" },
