@@ -23,6 +23,24 @@ const Calculator = () => {
     location: "",
   });
 
+  const formatPhoneNumber = (value) => {
+    if (!value) return value;
+    const phoneNumber = value.replace(/[^\d]/g, ""); // Оставляем только цифры
+    const phoneNumberLength = phoneNumber.length;
+
+    if (phoneNumberLength < 2) return `+7 (`;
+    if (phoneNumberLength < 5) {
+      return `+7 (${phoneNumber.slice(1)}`;
+    }
+    if (phoneNumberLength < 8) {
+      return `+7 (${phoneNumber.slice(1, 4)}) ${phoneNumber.slice(4)}`;
+    }
+    if (phoneNumberLength < 10) {
+      return `+7 (${phoneNumber.slice(1, 4)}) ${phoneNumber.slice(4, 7)}-${phoneNumber.slice(7)}`;
+    }
+    return `+7 (${phoneNumber.slice(1, 4)}) ${phoneNumber.slice(4, 7)}-${phoneNumber.slice(7, 9)}-${phoneNumber.slice(9, 11)}`;
+  };
+
   // Refs для слайдеров
   const pipeSliderRef = useRef(null);
   const setupSliderRef = useRef(null);
@@ -36,18 +54,14 @@ const Calculator = () => {
       valid = false;
     }
 
-    if (!contactForm.phone.trim()) {
-      newErrors.phone = "Телефон обязателен.";
+    // Проверка длины маскированного телефона (всегда 18 символов с учетом +7...)
+    if (contactForm.phone.length < 18) {
+      newErrors.phone = "Введите полный номер телефона.";
       valid = false;
     }
 
     if (contactForm.location.trim().length < 6) {
       newErrors.location = "Место бурения должно быть не менее 6 символов.";
-      valid = false;
-    }
-
-    if (!/^89\d{9}$/.test(contactForm.phone)) {
-      newErrors.phone = "Телефон должен начинаться с 89 и содержать 11 цифр.";
       valid = false;
     }
 
@@ -71,7 +85,6 @@ const Calculator = () => {
             depth: depth,
             includeEquipment: includeEquipment ? "Включён" : "Выключен",
             selectedSetup: selectedSetup?.title || "Не выбран",
-            // Добавляем итоговую цену
             totalPrice: calculateCost(),
           }),
         });
@@ -381,10 +394,14 @@ const Calculator = () => {
 
   const handleContactChange = (e) => {
     const { name, value } = e.target;
+
     if (name === "phone") {
-      if (!/^\d*$/.test(value) || value.length > 11) return;
+      // Применяем маску при вводе
+      const formattedValue = formatPhoneNumber(value);
+      setContactForm((prev) => ({ ...prev, phone: formattedValue }));
+    } else {
+      setContactForm((prev) => ({ ...prev, [name]: value }));
     }
-    setContactForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const calculateEquipmentCost = (depth) => {
@@ -593,8 +610,12 @@ const Calculator = () => {
                     name="phone"
                     value={contactForm.phone}
                     onChange={handleContactChange}
+                    onFocus={(e) => {
+                      if (!e.target.value)
+                        setContactForm((prev) => ({ ...prev, phone: "+7 (" }));
+                    }}
                     className={`form-control ${errors.phone ? "is-invalid" : ""}`}
-                    placeholder="Телефон (89XXXXXXXXX)"
+                    placeholder="+7 (___) ___-__-__"
                   />
                 </div>
                 <div className="col-12 mt-3">
