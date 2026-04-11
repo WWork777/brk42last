@@ -1,4 +1,3 @@
-// Calculator.jsx
 "use client";
 
 import Slider from "react-slick";
@@ -64,13 +63,16 @@ const Calculator = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
+            city: currentSite.city || "Кемерово",
             name: contactForm.name,
             phone: contactForm.phone,
             location: contactForm.location,
-            selectedPipe,
-            depth,
-            includeEquipment,
-            selectedSetup,
+            selectedPipe: selectedPipe?.title || "Не выбрана",
+            depth: depth,
+            includeEquipment: includeEquipment ? "Включён" : "Выключен",
+            selectedSetup: selectedSetup?.title || "Не выбран",
+            // Добавляем итоговую цену
+            totalPrice: calculateCost(),
           }),
         });
 
@@ -116,7 +118,6 @@ const Calculator = () => {
     );
   };
 
-  // Настройки для слайдера с трубами
   const pipeSliderSettings = {
     dots: true,
     infinite: false,
@@ -127,7 +128,7 @@ const Calculator = () => {
     arrows: true,
     nextArrow: <CustomNextArrow />,
     prevArrow: <CustomPrevArrow />,
-    dotsClass: "slick-dots custom-dots", // Кастомный класс для точек
+    dotsClass: "slick-dots custom-dots",
     appendDots: (dots) => (
       <div className="pagination-wrapper">
         <ul className="custom-dots-list">{dots}</ul>
@@ -144,7 +145,6 @@ const Calculator = () => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          // arrows: true,
           dots: true,
         },
       },
@@ -160,7 +160,6 @@ const Calculator = () => {
     ],
   };
 
-  // Настройки для слайдера с обустройством
   const setupSliderSettings = {
     dots: true,
     infinite: false,
@@ -188,7 +187,6 @@ const Calculator = () => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          // arrows: true,
           dots: true,
         },
       },
@@ -226,7 +224,6 @@ const Calculator = () => {
         "Бурение артезианской скважины с одной обсадной колонной. (гарантия 5 лет, срок эксплуатации 50 лет)",
       diameter: "125 мм",
       price: currentSite.priceBurenie,
-      note: "Гарантия 5 лет, срок эксплуатации 50 лет.",
       img: "/images/труба_пластик.webp",
     },
     {
@@ -236,7 +233,6 @@ const Calculator = () => {
         "Бурение артезианской скважины с двумя обсадными колоннами. (гарантия 10 лет, срок эксплуатации 50 лет)",
       diameter: "125 мм и 90 мм",
       price: currentSite.priceBurenie2,
-      note: "Гарантия 10 лет, срок эксплуатации 50 лет.",
       img: "/images/труба_пластикпластик.webp",
     },
     {
@@ -246,7 +242,6 @@ const Calculator = () => {
         "Бурение артезианской скважины с одной обсадной колонной. (гарантия до 3 лет, срок эксплуатации 10 лет)",
       diameter: "127-133 мм",
       price: currentSite.priceBurenie,
-      note: "Гарантия до 3 лет, срок эксплуатации 10 лет.",
       img: "/images/труба_железо_1слой.webp",
     },
     {
@@ -256,7 +251,6 @@ const Calculator = () => {
         "Бурение артезианской скважины с двумя обсадными колоннами. (гарантия до 3 лет, срок эксплуатации 10 лет)",
       diameter: "127-133 мм и 90 мм",
       price: currentSite.priceBurenie2,
-      note: "Гарантия до 3 лет, срок эксплуатации до 10 лет.",
       img: "/images/труба_железо_2слоя.webp",
     },
   ];
@@ -272,16 +266,14 @@ const Calculator = () => {
     {
       id: 2,
       title: "Летний вариант с системой автоматики",
-      description:
-        "Идеально подходит для летнего использования. Система автоматики обеспечивает стабильную работу.",
+      description: "Идеально подходит для летнего использования.",
       price: 40000,
       img: "/images/summer_version.webp",
     },
     {
       id: 3,
       title: "Круглогодичный вариант через адаптер (Рекомендуем)",
-      description:
-        "Оптимальный выбор для зимнего использования. Установка через адаптер с утеплением труб.",
+      description: "Оптимальный выбор для зимнего использования.",
       price: 80000,
       img: "/images/adapter_version.webp",
     },
@@ -299,143 +291,73 @@ const Calculator = () => {
     45: {
       total: 23700,
       items: [
-        { name: "Насос Беламос 65/3", quantity: 1, price: 23700 },
-        { name: "Обратный клапан", quantity: 1, price: 1 },
-        { name: "Муфта латунная", quantity: 1, price: 1 },
-        { name: "Зажимы нерж", quantity: 4, price: 1 },
-        { name: "Трос нерж", quantity: 22, price: 1 },
-        { name: "Труба ПНД", quantity: 22, price: 1 },
-        { name: "Кабель", quantity: 10, price: 1 },
-        { name: "Изолента", quantity: 1, price: 1 },
-        { name: "Оголовок", quantity: 1, price: 1 },
-        { name: "Вилка", quantity: 1, price: 1 },
-        { name: "Сливной клапан", quantity: 1, price: 1 },
+        { name: "Насос Беламос 65/3", quantity: 1 },
+        { name: "Трос нерж", quantity: 22 },
+        { name: "Труба ПНД", quantity: 22 },
+        { name: "Оголовок", quantity: 1 },
       ],
     },
     60: {
       total: 29300,
       items: [
-        { name: "Насос Беламос 90/3", quantity: 1, price: 0 },
-        { name: "Обратный клапан", quantity: 1, price: 0 },
-        { name: "Муфта латунная", quantity: 1, price: 0 },
-        { name: "Зажимы нерж", quantity: 4, price: 0 },
-        { name: "Трос нерж", quantity: 32, price: 0 },
-        { name: "Труба ПНД", quantity: 32, price: 0 },
-        { name: "Изолента", quantity: 1, price: 0 },
-        { name: "Оголовок", quantity: 1, price: 0 },
-        { name: "Вилка", quantity: 1, price: 0 },
-        { name: "Сливной клапан", quantity: 1, price: 0 },
+        { name: "Насос Беламос 90/3", quantity: 1 },
+        { name: "Трос нерж", quantity: 32 },
+        { name: "Труба ПНД", quantity: 32 },
+        { name: "Оголовок", quantity: 1 },
       ],
     },
     70: {
       total: 32000,
       items: [
-        { name: "Насос Беламос 90/3", quantity: 1, price: 18500 },
-        { name: "Обратный клапан", quantity: 1, price: 1000 },
-        { name: "Муфта латунная", quantity: 1, price: 800 },
-        { name: "Зажимы нерж", quantity: 4, price: 600 },
-        { name: "Трос нерж", quantity: 42, price: 3570 },
-        { name: "Труба ПНД", quantity: 42, price: 2730 },
-        { name: "Изолента", quantity: 1, price: 100 },
-        { name: "Оголовок", quantity: 1, price: 2500 },
-        { name: "Вилка", quantity: 1, price: 300 },
-        { name: "Сливной клапан", quantity: 1, price: 1000 },
+        { name: "Насос Беламос 90/3", quantity: 1 },
+        { name: "Трос нерж", quantity: 42 },
+        { name: "Труба ПНД", quantity: 42 },
+        { name: "Оголовок", quantity: 1 },
       ],
     },
     80: {
       total: 34000,
       items: [
-        { name: "Насос Беламос 115/3", quantity: 1, price: 18500 },
-        { name: "Обратный клапан", quantity: 1, price: 1000 },
-        { name: "Муфта латунная", quantity: 1, price: 800 },
-        { name: "Зажимы нерж", quantity: 4, price: 600 },
-        { name: "Трос нерж", quantity: 52, price: 4420 },
-        { name: "Труба ПНД", quantity: 52, price: 3380 },
-        { name: "Кабель", quantity: 10, price: 600 },
-        { name: "Изолента", quantity: 2, price: 200 },
-        { name: "Оголовок", quantity: 1, price: 2500 },
-        { name: "Вилка", quantity: 1, price: 300 },
-        { name: "Сливной клапан", quantity: 1, price: 1000 },
+        { name: "Насос Беламос 115/3", quantity: 1 },
+        { name: "Трос нерж", quantity: 52 },
+        { name: "Труба ПНД", quantity: 52 },
+        { name: "Оголовок", quantity: 1 },
       ],
     },
     90: {
       total: 35800,
       items: [
-        { name: "Насос Беламос 115/3", quantity: 1, price: 22500 },
-        { name: "Обратный клапан", quantity: 1, price: 1000 },
-        { name: "Муфта латунная", quantity: 1, price: 800 },
-        { name: "Зажимы нерж", quantity: 4, price: 600 },
-        { name: "Трос нерж", quantity: 62, price: 5270 },
-        { name: "Труба ПНД", quantity: 62, price: 4030 },
-        { name: "Кабель", quantity: 10, price: 600 },
-        { name: "Изолента", quantity: 3, price: 300 },
-        { name: "Оголовок", quantity: 1, price: 2500 },
-        { name: "Вилка", quantity: 1, price: 300 },
-        { name: "Сливной клапан", quantity: 1, price: 1000 },
+        { name: "Насос Беламос 115/3", quantity: 1 },
+        { name: "Трос нерж", quantity: 62 },
+        { name: "Труба ПНД", quantity: 62 },
+        { name: "Оголовок", quantity: 1 },
       ],
     },
     100: {
       total: 42400,
       items: [
-        { name: "Насос Беламос 140/3", quantity: 1, price: 22500 },
-        { name: "Обратный клапан", quantity: 1, price: 1000 },
-        { name: "Муфта латунная", quantity: 1, price: 800 },
-        { name: "Зажимы нерж", quantity: 4, price: 600 },
-        { name: "Трос нерж", quantity: 72, price: 6120 },
-        { name: "Труба ПНД", quantity: 72, price: 4680 },
-        { name: "Кабель", quantity: 20, price: 1200 },
-        { name: "Изолента", quantity: 3, price: 300 },
-        { name: "Оголовок", quantity: 1, price: 2500 },
-        { name: "Вилка", quantity: 1, price: 300 },
-        { name: "Сливной клапан", quantity: 1, price: 1000 },
-      ],
-    },
-    115: {
-      total: 45600,
-      items: [
-        { name: "Насос Беламос 140/3", quantity: 1, price: 26000 },
-        { name: "Обратный клапан", quantity: 1, price: 1000 },
-        { name: "Муфта латунная", quantity: 1, price: 800 },
-        { name: "Зажимы нерж", quantity: 4, price: 600 },
-        { name: "Трос нерж", quantity: 92, price: 7820 },
-        { name: "Труба ПНД", quantity: 92, price: 5980 },
-        { name: "Кабель", quantity: 30, price: 1800 },
-        { name: "Изолента", quantity: 3, price: 300 },
-        { name: "Оголовок", quantity: 1, price: 2500 },
-        { name: "Вилка", quantity: 1, price: 300 },
-        { name: "Сливной клапан", quantity: 1, price: 1000 },
+        { name: "Насос Беламос 140/3", quantity: 1 },
+        { name: "Трос нерж", quantity: 72 },
+        { name: "Труба ПНД", quantity: 72 },
+        { name: "Оголовок", quantity: 1 },
       ],
     },
     130: {
       total: 57000,
       items: [
-        { name: "Насос Беламос 160/3", quantity: 1, price: 26000 },
-        { name: "Обратный клапан", quantity: 1, price: 1000 },
-        { name: "Муфта латунная", quantity: 1, price: 800 },
-        { name: "Зажимы нерж", quantity: 4, price: 600 },
-        { name: "Трос нерж", quantity: 92, price: 7820 },
-        { name: "Труба ПНД", quantity: 92, price: 5980 },
-        { name: "Кабель", quantity: 30, price: 1800 },
-        { name: "Изолента", quantity: 3, price: 300 },
-        { name: "Оголовок", quantity: 1, price: 2500 },
-        { name: "Вилка", quantity: 1, price: 300 },
-        { name: "Сливной клапан", quantity: 1, price: 1000 },
+        { name: "Насос Беламос 160/3", quantity: 1 },
+        { name: "Трос нерж", quantity: 92 },
+        { name: "Труба ПНД", quantity: 92 },
+        { name: "Оголовок", quantity: 1 },
       ],
     },
     200: {
       total: 80000,
       items: [
-        { name: "Насос Беламос 160/3", quantity: 1, price: 26000 },
-        { name: "Обратный клапан", quantity: 1, price: 1000 },
-        { name: "Муфта латунная", quantity: 1, price: 800 },
-        { name: "Зажимы нерж", quantity: 4, price: 600 },
-        { name: "Трос нерж", quantity: 92, price: 7820 },
-        { name: "Труба ПНД", quantity: 92, price: 5980 },
-        { name: "Кабель", quantity: 30, price: 1800 },
-        { name: "Изолента", quantity: 3, price: 300 },
-        { name: "Оголовок", quantity: 1, price: 2500 },
-        { name: "Вилка", quantity: 1, price: 300 },
-        { name: "Сливной клапан", quantity: 1, price: 1000 },
+        { name: "Насос Беламос 160/3", quantity: 1 },
+        { name: "Трос нерж", quantity: 120 },
+        { name: "Труба ПНД", quantity: 120 },
+        { name: "Оголовок", quantity: 1 },
       ],
     },
   };
@@ -450,10 +372,8 @@ const Calculator = () => {
     return pipeCost + equipmentCost + setupCost;
   };
 
-  const calculateCostDepth = () => {
-    if (!selectedPipe) return 0;
-    return selectedPipe.price * depth;
-  };
+  const calculateCostDepth = () =>
+    selectedPipe ? selectedPipe.price * depth : 0;
 
   const toggleSetupSelection = (setup) => {
     setSelectedSetup((prev) => (prev?.id === setup.id ? null : setup));
@@ -461,16 +381,9 @@ const Calculator = () => {
 
   const handleContactChange = (e) => {
     const { name, value } = e.target;
-
     if (name === "phone") {
-      if (!/^\d*$/.test(value)) {
-        return;
-      }
-      if (value.length > 11) {
-        return;
-      }
+      if (!/^\d*$/.test(value) || value.length > 11) return;
     }
-
     setContactForm((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -492,8 +405,7 @@ const Calculator = () => {
           <h2 className="section-title">Калькулятор</h2>
           <p className="calculator-description">
             Рассчитайте стоимость вашей скважины, кроме скважины на песок.
-            Скважина на песок является негарантийной и не по ГОСТу. Скважину на
-            песок не бурим!
+            Скважину на песок не бурим!
           </p>
         </div>
 
@@ -509,32 +421,24 @@ const Calculator = () => {
                   <div key={pipe.id}>
                     <div
                       onClick={() => setSelectedPipe(pipe)}
-                      className={`pipe-card ${
-                        selectedPipe?.id === pipe.id ? "selected" : ""
-                      }`}
+                      className={`pipe-card ${selectedPipe?.id === pipe.id ? "selected" : ""}`}
                     >
                       <div className="pipe-content d-flex align-items-center">
-                        <div>
-                          <div className="pipe-image me-3">
-                            <img
-                              src={pipe.img}
-                              alt={pipe.title}
-                              className="img-fluid"
-                            />
-                          </div>
+                        <div className="pipe-image me-3">
+                          <img
+                            src={pipe.img}
+                            alt={pipe.title}
+                            className="img-fluid"
+                          />
                         </div>
                         <div className="pipe-text">
                           <h4>{pipe.title}</h4>
                           <p>{pipe.description}</p>
                           <div className="price">{pipe.price} ₽</div>
-                          <small>{pipe.warranty}</small>
                           <button className="btn-select btn btn-warning">
                             {selectedPipe?.id === pipe.id
                               ? "Выбрано"
                               : "Выбрать"}
-                            {selectedPipe?.id === pipe.id && (
-                              <i className="bi bi-check-lg m-2"></i>
-                            )}
                           </button>
                         </div>
                       </div>
@@ -568,20 +472,18 @@ const Calculator = () => {
 
         <div className="container total-cost mt-4">
           <h3>
-            Предварительная стоимость бурения скважины:
+            Предварительная стоимость бурения скважины:{" "}
             {selectedPipe ? (
               <span>{calculateCostDepth()} ₽</span>
             ) : (
-              <span style={{ color: "red" }}>
-                Конструкция скважины не выбрана (Шаг 1)
-              </span>
+              <span style={{ color: "red" }}>Конструкция не выбрана</span>
             )}
           </h3>
         </div>
 
         {/* Шаг 3 */}
         <div className="container mb-5 equipment-container">
-          <h3>Шаг 3. Комплект насосного оборудования для скважины</h3>
+          <h3>Шаг 3. Комплект насосного оборудования</h3>
           <div className="form-check">
             <input
               type="checkbox"
@@ -600,8 +502,8 @@ const Calculator = () => {
               <table className="table table-striped">
                 <thead>
                   <tr>
-                    <th scope="col">Название</th>
-                    <th scope="col">Количество</th>
+                    <th>Название</th>
+                    <th>Количество</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -614,8 +516,7 @@ const Calculator = () => {
                 </tbody>
               </table>
               <h4 className="total-cost">
-                Стоимость комплекта оборудования:{" "}
-                {calculateEquipmentCost(depth).total} ₽
+                Стоимость комплекта: {calculateEquipmentCost(depth).total} ₽
               </h4>
             </>
           )}
@@ -625,7 +526,7 @@ const Calculator = () => {
         <div className="calculator container py-5">
           <div className="slider-section">
             <h3 className="step-title mb-3">
-              Шаг 4. Выберите способ обустройства скважины (необязательно)
+              Шаг 4. Обустройство (необязательно)
             </h3>
             <div className="slider-container">
               <Slider ref={setupSliderRef} {...setupSliderSettings}>
@@ -633,32 +534,22 @@ const Calculator = () => {
                   <div key={setup.id}>
                     <div
                       onClick={() => toggleSetupSelection(setup)}
-                      className={`setup-card d-flex align-items-center ${
-                        selectedSetup?.id === setup.id ? "selected" : ""
-                      }`}
+                      className={`setup-card d-flex align-items-center ${selectedSetup?.id === setup.id ? "selected" : ""}`}
                     >
-                      <div>
-                        <div className="setup-image">
-                          <img
-                            src={setup.img}
-                            alt={setup.title}
-                            className="img-fluid"
-                          />
-                        </div>
+                      <div className="setup-image me-3">
+                        <img
+                          src={setup.img}
+                          alt={setup.title}
+                          className="img-fluid"
+                        />
                       </div>
                       <div className="setup-text">
                         <h4>{setup.title}</h4>
-                        <p>{setup.description}</p>
                         <div className="price">{setup.price} ₽</div>
                         <button className="btn-select btn btn-warning">
-                          {`${
-                            selectedSetup?.id === setup.id
-                              ? "Убрать"
-                              : "Выбрать"
-                          }`}
-                          {selectedSetup?.id === setup.id && (
-                            <i className="bi bi-x-lg m-2"></i>
-                          )}
+                          {selectedSetup?.id === setup.id
+                            ? "Убрать"
+                            : "Выбрать"}
                         </button>
                       </div>
                     </div>
@@ -672,43 +563,57 @@ const Calculator = () => {
         {/* Итоговая стоимость */}
         <div className="container total-cost mt-4">
           <h3>
-            Предварительная стоимость скважины под ключ (без учета земельных
-            работ):
-            <span>{calculateCost()} ₽</span>
+            Предварительная стоимость под ключ: <span>{calculateCost()} ₽</span>
           </h3>
         </div>
 
-        {/* Форма */}
+        {/* Форма обратной связи */}
         <div className="container contact-form mt-5">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-5">
               <h4>
-                Свяжитесь с нами, чтобы получить подробную консультацию инженера
-                и выезд на объект бесплатно
+                Свяжитесь с нами для консультации инженера и бесплатного выезда
               </h4>
             </div>
-            <div className="col-md-6">
-              <form onSubmit={handleFormSubmit} className="row" noValidate>
-                <div className="col-12 text-center">
-                  <Link
-                    href="tel:+7 (960) 925-08-70"
-                    className="btn btn-warning"
-                  >
-                    Позвонить нам
-                  </Link>
+            <div className="col-md-7">
+              <form onSubmit={handleFormSubmit} className="row g-3" noValidate>
+                <div className="col-md-6">
+                  <input
+                    type="text"
+                    name="name"
+                    value={contactForm.name}
+                    onChange={handleContactChange}
+                    className={`form-control ${errors.name ? "is-invalid" : ""}`}
+                    placeholder="Ваше имя"
+                  />
                 </div>
-                <div className="col-12 text-center">
-                  <Link
-                    href="https://max.ru/u/f9LHodD0cOLYp11qSjGn6aGeOrHVYNXvPYGcBgeqEKrhiq-H5M3ARCkgbhI"
-                    className="btn btn-warning"
-                  >
-                    Написать в Max
-                  </Link>
+                <div className="col-md-6">
+                  <input
+                    type="text"
+                    name="phone"
+                    value={contactForm.phone}
+                    onChange={handleContactChange}
+                    className={`form-control ${errors.phone ? "is-invalid" : ""}`}
+                    placeholder="Телефон (89XXXXXXXXX)"
+                  />
                 </div>
-                <div className="col-12 text-center">
-                  <Link href="/faq" className="btn btn-warning">
-                    Ответы на вопросы
-                  </Link>
+                <div className="col-12 mt-3">
+                  <input
+                    type="text"
+                    name="location"
+                    value={contactForm.location}
+                    onChange={handleContactChange}
+                    className={`form-control ${errors.location ? "is-invalid" : ""}`}
+                    placeholder="Место бурения (напр. деревня Солонечная)"
+                  />
+                </div>
+                <div className="col-12 mt-4">
+                  <button
+                    type="submit"
+                    className="btn btn-warning w-100 fw-bold"
+                  >
+                    ОТПРАВИТЬ ЗАЯВКУ
+                  </button>
                 </div>
               </form>
             </div>

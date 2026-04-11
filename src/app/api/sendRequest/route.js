@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { SITES, getCurrentSiteConfig } from "@/constants/city"; // Путь подкорректируй под свой
+import { getCurrentSiteConfig } from "@/constants/city";
 
 export async function POST(req) {
   try {
@@ -13,37 +13,50 @@ export async function POST(req) {
       depth,
       includeEquipment,
       selectedSetup,
+      totalPrice,
     } = body;
 
     const hostname = req.headers.get("host") || "";
     const site = getCurrentSiteConfig(hostname);
 
+    // Данные для сервисов
     const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-    const CHAT_ID = -1002577203888;
+    const CHAT_ID = "-1002577203888";
 
-    let message = `
-Новая заявка на бурение:
+    // GreenAPI данные (лучше тоже в process.env)
+    const ID_INSTANCE = "3100513246";
+    const API_TOKEN = "3dea5b752b074ae9811dc46deb0fc361602806e5214448e6b1";
+    const TARGET_PHONE = "79609250870";
 
-Город: ${site.clearCity}
-Имя: ${name}
-Телефон: ${phone}
-    `;
+    // Формируем текст сообщения
+    let message = `*Новая заявка на бурение*\n\n`;
+    message += `**Город:** ${site.clearCity}\n`;
+    message += `**Имя:** ${name}\n`;
+    message += `**Телефон:** ${phone}\n`;
 
     if (comments) {
-      message += `Комментарий: ${comments}\n`;
+      message += `**Комментарий:** ${comments}\n`;
     }
 
-    if (location || selectedPipe || depth || includeEquipment || selectedSetup) {
-      message += `
-Место бурения: ${location || "Не указано"}
-Конструкция скважины: ${selectedPipe?.title || "Не выбрана"}
-Глубина скважины: ${depth || "Не указана"} м
-Комплект оборудования: ${includeEquipment ? "Включён" : "Не включён"}
-Способ обустройства: ${selectedSetup?.title || "Не выбран"}
-      `;
+    if (
+      location ||
+      selectedPipe ||
+      depth ||
+      includeEquipment ||
+      selectedSetup
+    ) {
+      message += `\n**Детали расчета:**\n`;
+      message += `📍 Место: ${location || "Не указано"}\n`;
+      message += `🏗 Конструкция: ${selectedPipe?.title || "Не выбрана"}\n`;
+      message += `📏 Глубина: ${depth || "Не указана"} м\n`;
+      message += `📦 Оборудование: ${includeEquipment ? "Включён" : "Не включён"}\n`;
+      message += `🏠 Обустройство: ${selectedSetup?.title || "Не выбран"}\n`;
+
+      message += `💰 Итоговая цена: ${totalPrice} ₽\n`;
     }
 
-    const telegramResponse = await fetch(
+    // 1. Подготовка Telegram
+    const sendTelegram = fetch(
       `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
       {
         method: "POST",
@@ -53,13 +66,10 @@ export async function POST(req) {
           text: message,
           parse_mode: "Markdown",
         }),
-      }
+      },
     );
 
-    if (!telegramResponse.ok) {
-      throw new Error("Ошибка при отправке сообщения в Telegram");
-    }
-
+    // 2. Подготовка Email (Nodemailer)
     const transporter = nodemailer.createTransport({
       host: "smtp.yandex.ru",
       port: 465,
@@ -71,52 +81,49 @@ export async function POST(req) {
     });
 
     const mailOptions = {
-      from: `"${site.name}" sersur42@yandex.ru`,
+      from: `"Заявка: ${site.name}" <sersur42@yandex.ru>`,
       to: "bureniekemerovo@mail.ru",
-      subject: `Новая заявка (${site.clearCity})`,
-      text: message,
+      subject: `Новая заявка (${site.clearCity}) - ${name}`,
+      text: message.replace(/\*/g, ""), // Убираем звездочки Markdown для письма
     };
 
-    
-
-    await transporter.sendMail(mailOptions);
-    const Phone = "79609250870";
-    const idInstance = "3100513246";
-    const apiTokenInstance =
-      "3dea5b752b074ae9811dc46deb0fc361602806e5214448e6b1";
-    const maxResponse = await fetch(
-      `https://api.green-api.com/waInstance${idInstance}/SendMessage/${apiTokenInstance}`,
+    // 3. Подготовка GreenAPI (WhatsApp/Max)
+    const sendGreenApi = fetch(
+      `https://api.green-api.com/waInstance${ID_INSTANCE}/SendMessage/${API_TOKEN}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          chatId: `${Phone}@c.us`,
-          message: message,
+          chatId: `${TARGET_PHONE}@c.us`,
+          message: message.replace(/\*/g, ""), // WhatsApp не всегда красиво ест Markdown
         }),
       },
     );
-      
-    // if (maxResponse.ok) {
-    //   console.log("заявка в макс пришла");
-    // }
-    // else{
-    //   console.log("ошибка");
-    // }
+
+    // Запускаем всё параллельно
+    // Используем allSettled, чтобы если один сервис упал, остальные всё равно отработали
+    const results = await Promise.allSettled([
+      sendTelegram,
+      transporter.sendMail(mailOptions),
+      sendGreenApi,
+    ]);
+
+    // Логируем ошибки в консоль для отладки
+    results.forEach((result, index) => {
+      if (result.status === "rejected") {
+        console.error(`Ошибка в сервисе #${index}:`, result.reason);
+      }
+    });
 
     return new Response(
-      JSON.stringify({ success: true, message: "Заявка успешно отправлена!" }),
-      {
-        status: 200,
-      }
+      JSON.stringify({ success: true, message: "Заявка успешно обработана" }),
+      { status: 200 },
     );
-
-    
   } catch (error) {
-    console.error("Ошибка:", error.message);
-    return new Response(JSON.stringify({ success: false, message: error.message }), {
-      status: 500,
-    });
+    console.error("Критическая ошибка роута:", error);
+    return new Response(
+      JSON.stringify({ success: false, message: "Внутренняя ошибка сервера" }),
+      { status: 500 },
+    );
   }
-
-  
 }
