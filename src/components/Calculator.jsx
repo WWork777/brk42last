@@ -73,7 +73,9 @@ const Calculator = () => {
     e.preventDefault();
     if (validateForm()) {
       // ОЧИСТКА НОМЕРА: удаляем +, (, ), -, пробелы перед отправкой
-      const cleanPhone = contactForm.phone.replace(/[^\d]/g, "");
+      const digitsOnly = contactForm.phone.replace(/[^\d]/g, "");
+      // Добавляем + в начало
+      const cleanPhoneWithPlus = "+" + digitsOnly;
 
       try {
         const response = await fetch("/api/sendRequest", {
@@ -82,7 +84,7 @@ const Calculator = () => {
           body: JSON.stringify({
             city: currentSite.city || "Кемерово",
             name: contactForm.name,
-            phone: cleanPhone, // Отправляем чистые цифры (напр. 7913...)
+            phone: cleanPhoneWithPlus, // Отправляем чистые цифры (напр. 7913...)
             location: contactForm.location,
             selectedPipe: selectedPipe?.title || "Не выбрана",
             depth: depth,
