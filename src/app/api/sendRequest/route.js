@@ -24,8 +24,8 @@ export async function POST(req) {
     const CHAT_ID = "-1002577203888";
 
     // GreenAPI данные (лучше тоже в process.env)
-    const ID_INSTANCE = "3100513246";
-    const API_TOKEN = "3dea5b752b074ae9811dc46deb0fc361602806e5214448e6b1";
+    const ID_INSTANCE = "3100517801";
+    const API_TOKEN = "4e23b210658549c881680633b93bb11301a0f304a927433da6";
     const TARGET_PHONE = "79609250870";
 
     // Формируем текст сообщения
