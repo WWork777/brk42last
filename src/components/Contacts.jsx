@@ -90,7 +90,7 @@ const Contacts = () => {
       valid = false;
     }
 
-    if (!agreed == true){
+    if (!agreed == true) {
       newErrors.agree = "Оставьте согласие на обработку персональных данных";
       valid = false;
     }
@@ -115,6 +115,12 @@ const Contacts = () => {
         });
 
         if (response.ok) {
+          // --- ДОБАВЛЕНА ЦЕЛЬ ЯНДЕКС.МЕТРИКИ ---
+          if (typeof ym !== "undefined") {
+            ym(99461611, "reachGoal", "formContacts");
+          }
+          // -------------------------------------
+
           setSuccessMessage("Заявка успешно отправлена!");
           setTimeout(() => setSuccessMessage(""), 5000);
           setFormData({ name: "", phone: "", comments: "" });
@@ -202,27 +208,36 @@ const Contacts = () => {
                 )}
               </div>
               <div className="col-12 mb-3">
-                  <div className={`form-check ${
-                      errors.agree ? "is-invalid" : ""
-                    }`}>
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id="privacyPolicy"
-                      checked={agreed}
-                      onChange={(e) => setAgreed(e.target.checked)}
-                    />
-                    
-                    
-                    <label className=" small" htmlFor="privacyPolicy" style={{color:"white"}}>
-                      Я согласен на обработку <a className="persdannie" href="/docs/confidencialnost.pdf" target="_blank">персональных данных</a>
-                    </label>
-                    
-                  </div>
-                  {errors.agree && (
-                      <div className="invalid-feedback">{errors.agree}</div>
-                    )}
+                <div
+                  className={`form-check ${errors.agree ? "is-invalid" : ""}`}
+                >
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    id="privacyPolicy"
+                    checked={agreed}
+                    onChange={(e) => setAgreed(e.target.checked)}
+                  />
+
+                  <label
+                    className=" small"
+                    htmlFor="privacyPolicy"
+                    style={{ color: "white" }}
+                  >
+                    Я согласен на обработку{" "}
+                    <a
+                      className="persdannie"
+                      href="/docs/confidencialnost.pdf"
+                      target="_blank"
+                    >
+                      персональных данных
+                    </a>
+                  </label>
                 </div>
+                {errors.agree && (
+                  <div className="invalid-feedback">{errors.agree}</div>
+                )}
+              </div>
               <button
                 type="submit"
                 // href="tel:+7 (960) 925-08-70"
@@ -241,7 +256,6 @@ const Contacts = () => {
               >
                 Написать в Max
               </Link>
-              
             </form>
             <h4>Контакты ООО «{currentSite.name}</h4>
             <ContactInfo />

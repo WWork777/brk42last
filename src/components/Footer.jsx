@@ -1,24 +1,30 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import "../styles/components/_footer.scss";
-import { useState, useEffect } from "react";
-
 import { getCurrentSiteConfig } from "@/constants/city";
 
+// Добавлено поле `goal` для Яндекс.Метрики
 const socialLinks = [
   {
     href: "https://max.ru/u/f9LHodD0cOLYp11qSjGn6aGeOrHVYNXvPYGcBgeqEKrhiq-H5M3ARCkgbhI",
     icon: "/icons/max.svg",
     label: "Max",
+    goal: "max",
   },
   {
     href: "mailto:bureniekemerovo@mail.ru",
     icon: "/icons/mail.svg",
     label: "Mail",
+    goal: "email",
   },
-  { href: "https://vk.com/bureniekem", icon: "/icons/vk.svg", label: "VK" },
+  {
+    href: "https://vk.com/bureniekem",
+    icon: "/icons/vk.svg",
+    label: "VK",
+    goal: "vk",
+  },
 ];
 
 const Footer = () => {
@@ -35,6 +41,13 @@ const Footer = () => {
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
+
+  // Универсальная функция для отправки целей
+  const handleGoal = (goalName) => {
+    if (typeof ym !== "undefined") {
+      ym(99461611, "reachGoal", goalName);
+    }
+  };
 
   return (
     <footer className="footer">
@@ -116,9 +129,11 @@ const Footer = () => {
                   className="bi bi-telephone"
                   style={{ marginRight: ".5rem" }}
                 ></i>
+                {/* Цель на клик по телефону */}
                 <a
                   href="tel:+79609250870"
                   aria-label="Позвонить по номеру +7 (960) 925-08-70"
+                  onClick={() => handleGoal("phone")}
                 >
                   {currentSite.phone}
                 </a>
@@ -128,9 +143,11 @@ const Footer = () => {
                   className="icon bi bi-envelope"
                   style={{ marginRight: ".5rem" }}
                 ></i>
+                {/* Цель на клик по email */}
                 <a
                   href="mailto:bureniekemerovo@mail.ru"
                   aria-label="Отправить письмо на bureniekemerovo@mail.ru"
+                  onClick={() => handleGoal("email")}
                 >
                   bureniekemerovo@mail.ru
                 </a>
@@ -144,6 +161,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Перейти в ${link.label}`}
+                  onClick={() => handleGoal(link.goal)} // Цель на клик по иконкам соцсетей
                 >
                   <img
                     src={link.icon}

@@ -1,10 +1,11 @@
-"use client"; // Добавлено
+"use client";
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import "../styles/components/_header.scss";
 import { getCurrentSiteConfig } from "@/constants/city";
 import Image from "next/image";
+
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -35,6 +36,13 @@ const Header = () => {
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Функция для отправки цели в Яндекс.Метрику
+  const handlePhoneClick = () => {
+    if (typeof ym !== "undefined") {
+      ym(99461611, "reachGoal", "phone");
+    }
+  };
 
   return (
     <header className={`header ${isScrolled ? "scrolled" : ""}`}>
@@ -91,7 +99,12 @@ const Header = () => {
         </nav>
 
         <div className="call-to-action">
-          <a href="tel:+79609250870" className="phone">
+          {/* Обработчик onClick добавлен сюда */}
+          <a
+            href="tel:+79609250870"
+            className="phone"
+            onClick={handlePhoneClick}
+          >
             {currentSite.phone}
             <br />
             <span>{currentSite.city}</span>
@@ -158,10 +171,15 @@ const Header = () => {
             </li>
           </ul>
           <div className="call-to-action">
-            <a href="tel:+73832349988" className="phone">
+            {/* Обработчик onClick добавлен сюда */}
+            <a
+              href="tel:+73832349988"
+              className="phone"
+              onClick={handlePhoneClick}
+            >
               +7 (960) 925-08-70
             </a>
-            <Link href="/#contacts" className="btn-yellow">
+            <Link href="/#contacts" className="btn-yellow" onClick={closeMenu}>
               Заказать звонок
             </Link>
           </div>

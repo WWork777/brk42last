@@ -95,6 +95,12 @@ const Calculator = () => {
         });
 
         if (response.ok) {
+          // --- ДОБАВЛЕНА ЦЕЛЬ ЯНДЕКС.МЕТРИКИ ---
+          if (typeof ym !== "undefined") {
+            ym(99461611, "reachGoal", "calculate");
+          }
+          // -------------------------------------
+
           alert("Заявка успешно отправлена!");
           setContactForm({ name: "", phone: "", location: "" });
           setSelectedPipe(null);
