@@ -5,7 +5,7 @@ const isProd = process.env.NODE_ENV === "production";
 
 const nextConfig = {
   // Включаем префикс для всех статических файлов (JS, CSS, шрифты)
-  //   assetPrefix: isProd ? "https://cdn.brk42.ru" : undefined,
+  assetPrefix: isProd ? "https://cdn.brk42.ru" : undefined,
 
   images: {
     formats: ["image/avif", "image/webp"],
