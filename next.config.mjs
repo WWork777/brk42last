@@ -8,6 +8,8 @@ const nextConfig = {
   assetPrefix: isProd ? "https://cdn.brk42.ru" : undefined,
 
   images: {
+    loader: "akamai", // или 'custom'
+    path: "https://cdn.brk42.ru",
     formats: ["image/avif", "image/webp"],
     // Добавляем твой CDN в список разрешенных доменов для картинок
     domains: ["pic.rutube.ru", "avatars.mds.yandex.net", "cdn.brk42.ru"],
